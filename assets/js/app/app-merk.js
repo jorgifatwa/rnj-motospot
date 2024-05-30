@@ -48,7 +48,7 @@ define([
                 "processing": true,
                 "serverSide": true,
                 "ajax":{
-                    "url": App.baseUrl+"kategori_produk/dataList",
+                    "url": App.baseUrl+"merk/dataList",
                     "dataType": "json",
                     "type": "POST",
                 },

@@ -10,20 +10,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property CI_DB_forge         $dbforge
  * @property CI_DB_query_builder $db
  */
-class Migration_create_table_pelanggan extends CI_Migration {
+class Migration_create_table_motor extends CI_Migration {
 
 
 	public function up()
 	{ 
-		$table = "pelanggan";
+		$table = "motor";
 		$fields = array(
 			'id'           => [
 				'type'           => 'INT(11)',
 				'auto_increment' => TRUE,
 				'unsigned'       => TRUE,
 			],
-			'nama'          => [
-				'type' => 'VARCHAR(50)',
+			'merk_id'          => [
+				'type' => 'TINYINT(4)',
+			],
+			'jenis_id'          => [
+				'type' => 'TINYINT(4)',
+			],
+			'cabang_id'          => [
+				'type' => 'TINYINT(4)',
+			],
+			'nik'          => [
+				'type' => 'VARCHAR(100)',
+			],
+			'km'          => [
+				'type' => 'INT(11)',
+			],
+			'pajak'          => [
+				'type' => 'DATE',
+			],
+			'harga_modal'          => [
+				'type' => 'INT(11)',
+			],
+			'harga_open'=> [
+				'type' => 'INT(11)',
+			],
+			'harga_net'=> [
+				'type' => 'INT(11)',
+			],
+			'keterangan'      => [
+				'type' => 'VARCHAR(100)',
+			],
+			'status'          => [
+				'type' => 'INT(1)',
 			],
 			'created_at'      => [
 				'type' => 'DATETIME',
@@ -50,7 +80,7 @@ class Migration_create_table_pelanggan extends CI_Migration {
 
 	public function down()
 	{
-		$table = "pelanggan";
+		$table = "motor";
 		if ($this->db->table_exists($table))
 		{
 			$this->db->query(drop_foreign_key($table, 'api_key'));

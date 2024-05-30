@@ -1,19 +1,19 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 require_once APPPATH . 'core/Admin_Controller.php';
-class Kategori_produk extends Admin_Controller 
+class Jenis extends Admin_Controller 
 {
 	public function __construct() 
 	{
 		parent::__construct();
-		$this->load->model('kategori_produk_model');
+		$this->load->model('jenis_model');
 	}
 
 	public function index() 
 	{
 		$this->load->helper('url');
 		if ($this->data['is_can_read']) {
-			$this->data['content'] = 'admin/kategori_produk/list_v';
+			$this->data['content'] = 'admin/jenis/list_v';
 		} else {
 			$this->data['content'] = 'errors/html/restrict';
 		}
@@ -35,17 +35,17 @@ class Kategori_produk extends Admin_Controller
 			);
 
 
-			$insert = $this->kategori_produk_model->insert($data);
+			$insert = $this->jenis_model->insert($data);
 
 			if ($insert) {
-				$this->session->set_flashdata('message', "Kategori Produk Baru Berhasil Disimpan");
-				redirect("kategori_produk");
+				$this->session->set_flashdata('message', "Jenis Baru Berhasil Disimpan");
+				redirect("jenis");
 			} else {
-				$this->session->set_flashdata('message_error', "Kategori Produk Baru Gagal Disimpan");
-				redirect("kategori_produk");
+				$this->session->set_flashdata('message_error', "Jenis Baru Gagal Disimpan");
+				redirect("jenis");
 			}
 		} else {
-			$this->data['content'] = 'admin/kategori_produk/create_v';
+			$this->data['content'] = 'admin/jenis/create_v';
 			$this->load->view('admin/layouts/page', $this->data);
 		}
 	}
@@ -66,28 +66,28 @@ class Kategori_produk extends Admin_Controller
 
 			$id = $this->input->post('id');
 
-			$update = $this->kategori_produk_model->update($data, array("kategori_produk.id" => $id));
+			$update = $this->jenis_model->update($data, array("jenis.id" => $id));
 
 			if ($update) {
-				$this->session->set_flashdata('message', "Kategori Produk Berhasil Diubah");
-				redirect("kategori_produk", "refresh");
+				$this->session->set_flashdata('message', "Jenis Berhasil Diubah");
+				redirect("jenis", "refresh");
 			} else {
-				$this->session->set_flashdata('message_error', "Kategori Produk Gagal Diubah");
-				redirect("kategori_produk", "refresh");
+				$this->session->set_flashdata('message_error', "Jenis Gagal Diubah");
+				redirect("jenis", "refresh");
 			}
 		} else {
 			if (!empty($_POST)) {
 				$id = $this->input->post('id');
 				$this->session->set_flashdata('message_error', validation_errors());
-				return redirect("kategori_produk/edit/" . $id);
+				return redirect("jenis/edit/" . $id);
 			} else {
 				$this->data['id'] = $this->uri->segment(3);
-				$kategori_produk = $this->kategori_produk_model->getAllById(array("kategori_produk.id" => $this->data['id']));
+				$jenis = $this->jenis_model->getAllById(array("jenis.id" => $this->data['id']));
 				
-				$this->data['id'] 	= (!empty($kategori_produk)) ? $kategori_produk[0]->id : "";
-				$this->data['nama'] 	= (!empty($kategori_produk)) ? $kategori_produk[0]->nama : "";
-				$this->data['description'] = (!empty($kategori_produk)) ? $kategori_produk[0]->description : "";
-				$this->data['content'] = 'admin/kategori_produk/edit_v';
+				$this->data['id'] 	= (!empty($jenis)) ? $jenis[0]->id : "";
+				$this->data['nama'] 	= (!empty($jenis)) ? $jenis[0]->nama : "";
+				$this->data['description'] = (!empty($jenis)) ? $jenis[0]->description : "";
+				$this->data['content'] = 'admin/jenis/edit_v';
 				$this->load->view('admin/layouts/page', $this->data);
 			}
 		}
@@ -107,22 +107,22 @@ class Kategori_produk extends Admin_Controller
 		$search = array();
 		$limit = 0;
 		$start = 0;
-		$totalData = $this->kategori_produk_model->getCountAllBy($limit, $start, $search, $order, $dir);
+		$totalData = $this->jenis_model->getCountAllBy($limit, $start, $search, $order, $dir);
 
 		if (!empty($this->input->post('search')['value'])) {
 			$search_value = $this->input->post('search')['value'];
 			$search = array(
-				"kategori_produk.nama" => $search_value,
-				"kategori_produk.description" => $search_value,
+				"jenis.nama" => $search_value,
+				"jenis.description" => $search_value,
 			);
-			$totalFiltered = $this->kategori_produk_model->getCountAllBy($limit, $start, $search, $order, $dir);
+			$totalFiltered = $this->jenis_model->getCountAllBy($limit, $start, $search, $order, $dir);
 		} else {
 			$totalFiltered = $totalData;
 		}
 
 		$limit = $this->input->post('length');
 		$start = $this->input->post('start');
-		$datas = $this->kategori_produk_model->getAllBy($limit, $start, $search, $order, $dir);
+		$datas = $this->jenis_model->getAllBy($limit, $start, $search, $order, $dir);
 
 		$new_data = array();
 		if (!empty($datas)) {
@@ -133,11 +133,11 @@ class Kategori_produk extends Admin_Controller
 				$delete_url = "";
 
 				if ($this->data['is_can_edit'] && $data->is_deleted == 0) {
-					$edit_url = "<a href='" . base_url() . "kategori_produk/edit/" . $data->id . "' class='btn btn-sm btn-info white'> Ubah</a>";
+					$edit_url = "<a href='" . base_url() . "jenis/edit/" . $data->id . "' class='btn btn-sm btn-info white'> Ubah</a>";
 				}
 				if ($this->data['is_can_delete']) {
 					$delete_url = "<a href='#'
-						url='" . base_url() . "kategori_produk/destroy/" . $data->id . "/" . $data->is_deleted . "'
+						url='" . base_url() . "jenis/destroy/" . $data->id . "/" . $data->is_deleted . "'
 						class='btn btn-sm btn-danger white delete'>Hapus
 						</a>";
 				}
@@ -170,14 +170,14 @@ class Kategori_produk extends Admin_Controller
 		$id = $this->uri->segment(3);
 		$is_deleted = $this->uri->segment(4);
 		if (!empty($id)) {
-			$this->load->model("kategori_produk_model");
+			$this->load->model("jenis_model");
 			$data = array(
 				'is_deleted' => ($is_deleted == 1) ? 0 : 1,
 			);
-			$update = $this->kategori_produk_model->update($data, array("id" => $id));
+			$update = $this->jenis_model->update($data, array("id" => $id));
 
 			$response_data['data'] = $data;
-			$response_data['msg'] = "Kategori Produk Berhasil di Hapus";
+			$response_data['msg'] = "Jenis Berhasil di Hapus";
 			$response_data['status'] = true;
 		} else {
 			$response_data['msg'] = "ID Harus Diisi";

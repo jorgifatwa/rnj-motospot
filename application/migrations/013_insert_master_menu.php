@@ -23,10 +23,9 @@ class Migration_insert_master_menu extends CI_Migration {
             array('id'=>4,'module_id'=>1, 'name'=>'User', 'url'=>'user', 'parent_id'=>3, 'icon'=>"a fa-circle-o", 'sequence'=>2),
             array('id'=>5,'module_id'=>1, 'name'=>'Jabatan', 'url'=>'role', 'parent_id'=>3, 'icon'=>"a fa-circle-o", 'sequence'=>3),
             array('id'=>7,'module_id'=>1, 'name'=>'Master Data', 'url'=>'#', 'parent_id'=>1, 'icon'=>"fa fa-archive", 'sequence'=>4),
-            array('id'=>8,'module_id'=>1, 'name'=>'Produk', 'url'=>'produk', 'parent_id'=>7, 'icon'=>"fa fa-circle-o", 'sequence'	=>1), 
-            array('id'=>9,'module_id'=>1, 'name'=>'Kategori Produk', 'url'=>'kategori_produk', 'parent_id'=>7, 'icon'=>"fa fa-circle-o", 'sequence'	=>2), 
-            array('id'=>10,'module_id'=>1, 'name'=>'Karyawan', 'url'=>'karyawan', 'parent_id'=>7, 'icon'=>"fa fa-circle-o", 'sequence'	=>3), 
-            array('id'=>11,'module_id'=>1, 'name'=>'Pelanggan', 'url'=>'pelanggan', 'parent_id'=>7, 'icon'=>"fa fa-circle-o", 'sequence'	=>4), 
+            array('id'=>8,'module_id'=>1, 'name'=>'Motor', 'url'=>'motor', 'parent_id'=>7, 'icon'=>"fa fa-circle-o", 'sequence'	=>1), 
+            array('id'=>9,'module_id'=>1, 'name'=>'Merk', 'url'=>'merk', 'parent_id'=>7, 'icon'=>"fa fa-circle-o", 'sequence'	=>2), 
+            array('id'=>10,'module_id'=>1, 'name'=>'Jenis', 'url'=>'jenis', 'parent_id'=>7, 'icon'=>"fa fa-circle-o", 'sequence'	=>3), 
             array('id'=>12,'module_id'=>1, 'name'=>'Transaksi', 'url'=>'#', 'parent_id'=>1, 'icon'=>"fa fa-exchange-alt", 'sequence'=>2),
             array('id'=>13,'module_id'=>1, 'name'=>'Buat Pesanan', 'url'=>'pesanan', 'parent_id'=>12, 'icon'=>"fa fa-circle-o", 'sequence'=>1),         
         );

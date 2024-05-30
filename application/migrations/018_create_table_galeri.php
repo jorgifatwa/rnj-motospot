@@ -10,29 +10,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property CI_DB_forge         $dbforge
  * @property CI_DB_query_builder $db
  */
-class Migration_create_table_karyawan extends CI_Migration {
+class Migration_create_table_jenis extends CI_Migration {
 
 
 	public function up()
 	{ 
-		$table = "karyawan";
+		$table = "jenis";
 		$fields = array(
 			'id'           => [
 				'type'           => 'INT(11)',
 				'auto_increment' => TRUE,
 				'unsigned'       => TRUE,
 			],
-			'nama'          => [
-				'type' => 'VARCHAR(100)',
+			'produk_id'          => [
+				'type' => 'TINYINT(4)',
 			],
-			'email'          => [
+			'gambar'      => [
 				'type' => 'VARCHAR(100)',
-			],
-			'no_hp'          => [
-				'type' => 'VARCHAR(100)',
-			],
-			'alamat'      => [
-				'type' => 'TEXT',
 			],
 			'created_at'      => [
 				'type' => 'DATETIME',
@@ -59,7 +53,7 @@ class Migration_create_table_karyawan extends CI_Migration {
 
 	public function down()
 	{
-		$table = "karyawan";
+		$table = "jenis";
 		if ($this->db->table_exists($table))
 		{
 			$this->db->query(drop_foreign_key($table, 'api_key'));

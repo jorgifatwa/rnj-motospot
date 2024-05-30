@@ -42,18 +42,6 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label  class="form-label col-sm-4">Nama Bank</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="nama_bank" placeholder="Nama Bank" name="nama_bank">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label  class="form-label col-sm-4">No. Rekening</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control number" id="no_rekening" placeholder="No. Rekening" name="no_rekening">
-                                </div>
-                            </div>
-                            <div class="form-group row">
                                 <label class="form-label col-sm-4">Alamat</label>
                                 <div class="col-sm-8">
                                     <textarea class="form-control" name="address" placeholder="Alamat"></textarea>
@@ -66,11 +54,9 @@
                                 <div class="col-sm-8">
                                     <select id="role_id" name="role_id" class="form-control">
                                         <option value="">Pilih Jabatan</option>
-                                        <?php
-foreach ($roles as $key => $role) {?>
-                                        <option value="<?php echo $role->id; ?>"><?php echo $role->name; ?></option>
-                                        <?php }
-?>
+                                        <?php foreach ($roles as $key => $role) { ?>
+                                            <option value="<?php echo $role->id; ?>"><?php echo $role->name; ?></option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>

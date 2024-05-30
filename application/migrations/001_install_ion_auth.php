@@ -83,14 +83,6 @@ class Migration_Install_ion_auth extends CI_Migration {
 				'type'       => 'VARCHAR',
 				'constraint' => '254'
 			),
-			'no_rekening' => array(
-				'type'       => 'VARCHAR',
-				'constraint' => '100'
-			),
-			'nama_bank' => array(
-				'type'       => 'VARCHAR',
-				'constraint' => '100'
-			),
 			'activation_code' => array(
 				'type'       => 'VARCHAR',
 				'constraint' => '40',

@@ -27,8 +27,6 @@ class User extends Admin_Controller {
 		$this->form_validation->set_rules('name',"Nama", 'trim|required'); 
 		$this->form_validation->set_rules('password',"Password", 'trim|required');
 		$this->form_validation->set_rules('role_id',"Role", 'trim|required');
-		$this->form_validation->set_rules('nama_bank',"Nama Bank", 'trim|required');
-		$this->form_validation->set_rules('no_rekening',"No. Rekening", 'trim|required');
 		if ($this->form_validation->run() === TRUE)
 		{
 			$data = array(
@@ -37,8 +35,6 @@ class User extends Admin_Controller {
 				'active' => 1,
 				'email' => $this->input->post('email'),
 				'phone' => $this->input->post('phone'),
-				'nama_bank' => $this->input->post('nama_bank'),
-				'no_rekening' => $this->input->post('no_rekening'),
 				'is_deleted' => 0
 			); 
 			$role = array($this->input->post('role_id'));  
@@ -100,8 +96,6 @@ class User extends Admin_Controller {
 		$this->form_validation->set_rules('email',"Email", 'trim|required');  
 		$this->form_validation->set_rules('name',"Nama", 'trim|required'); 
 		$this->form_validation->set_rules('role_id',"Role", 'trim|required');
-		$this->form_validation->set_rules('nama_bank',"Nama Bank", 'trim|required');
-		$this->form_validation->set_rules('no_rekening',"No. Rekening", 'trim|required');
 		if ($this->form_validation->run() === TRUE)
 		{
 			$data = array(
@@ -110,8 +104,6 @@ class User extends Admin_Controller {
 				'active' => 1,
 				'email' => $this->input->post('email'),
 				'phone' => $this->input->post('phone'),
-				'nama_bank' => $this->input->post('nama_bank'),
-				'no_rekening' => $this->input->post('no_rekening'),
 				'is_deleted' => 0
 			); 
 			$user_id = $this->input->post('id'); 
@@ -153,8 +145,6 @@ class User extends Admin_Controller {
 				$this->data['email'] =   (!empty($data))?$data->email:""; 
 				$this->data['phone'] =   (!empty($data))?$data->phone:"";  
 				$this->data['role_id'] =   (!empty($data))?$data->role_id:""; 
-				$this->data['nama_bank'] =   (!empty($data))?$data->nama_bank:""; 
-				$this->data['no_rekening'] =   (!empty($data))?$data->no_rekening:""; 
 				$this->data['content'] = 'admin/user/edit_v'; 
 				$this->load->view('admin/layouts/page',$this->data); 
 			}  
@@ -170,9 +160,7 @@ class User extends Admin_Controller {
             2 =>'users.first_name',
             3 =>'users.phone',
             4 => 'users.email',  
-            5 => 'users.nama_bank',  
-            6 => 'users.no_rekening',  
-            7 => 'action'
+            5 => 'action'
         ); 
         $order = $columns[$this->input->post('order')[0]['column']];
         $dir = $this->input->post('order')[0]['dir'];
@@ -189,8 +177,6 @@ class User extends Admin_Controller {
            		"users.first_name"=>$search_value,
            		"users.phone"=>$search_value,
            		"users.email"=>$search_value,
-           		"users.nama_bank"=>$search_value,
-           		"users.no_rekening"=>$search_value,
            	); 
            	$totalFiltered = $this->user_model->getCountAllBy($limit,$start,$search,$order,$dir); 
         }else{
@@ -233,8 +219,6 @@ class User extends Admin_Controller {
                 $nestedData['role_name'] = $data->role_name;  
                 $nestedData['name'] = $data->first_name . ' ' . $data->last_name;
                 $nestedData['phone'] = $data->phone; 
-                $nestedData['nama_bank'] = $data->nama_bank; 
-                $nestedData['no_rekening'] = $data->no_rekening; 
                 $nestedData['email'] = $data->email;
                 if(empty($data->photo)){
                 	$nestedData['photo'] = ''; 	

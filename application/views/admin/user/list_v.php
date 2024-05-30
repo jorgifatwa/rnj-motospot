@@ -36,8 +36,6 @@
                   <th>Jabatan</th>
                   <th>No HP</th>
                   <th>Email</th>
-                  <th>Nama Bank</th>
-                  <th>No. Rekening</th>
                   <th>Aksi</th>
               </tr>
             </thead>

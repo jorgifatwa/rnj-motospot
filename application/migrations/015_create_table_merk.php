@@ -10,12 +10,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property CI_DB_forge         $dbforge
  * @property CI_DB_query_builder $db
  */
-class Migration_create_table_kategori_produk extends CI_Migration {
+class Migration_create_table_merk extends CI_Migration {
 
 
 	public function up()
 	{ 
-		$table = "kategori_produk";
+		$table = "merk";
 		$fields = array(
 			'id'           => [
 				'type'           => 'INT(11)',
@@ -53,7 +53,7 @@ class Migration_create_table_kategori_produk extends CI_Migration {
 
 	public function down()
 	{
-		$table = "kategori_produk";
+		$table = "merk";
 		if ($this->db->table_exists($table))
 		{
 			$this->db->query(drop_foreign_key($table, 'api_key'));

@@ -10,38 +10,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property CI_DB_forge         $dbforge
  * @property CI_DB_query_builder $db
  */
-class Migration_create_table_produk extends CI_Migration {
+class Migration_create_table_jenis extends CI_Migration {
 
 
 	public function up()
 	{ 
-		$table = "produk";
+		$table = "jenis";
 		$fields = array(
 			'id'           => [
 				'type'           => 'INT(11)',
 				'auto_increment' => TRUE,
 				'unsigned'       => TRUE,
 			],
-			'kategori_id'          => [
-				'type' => 'TINYINT(4)',
-			],
 			'nama'          => [
 				'type' => 'VARCHAR(100)',
 			],
-			'harga_jual'          => [
-				'type' => 'INT(11)',
-			],
-			'harga_modal'=> [
-				'type' => 'INT(11)',
-			],
-			'gambar'          => [
-				'type' => 'VARCHAR(100)',
-			],
-			'keterangan'      => [
-				'type' => 'VARCHAR(100)',
-			],
-			'status'          => [
-				'type' => 'INT(1)',
+			'description'      => [
+				'type' => 'TEXT',
 			],
 			'created_at'      => [
 				'type' => 'DATETIME',
@@ -68,7 +53,7 @@ class Migration_create_table_produk extends CI_Migration {
 
 	public function down()
 	{
-		$table = "produk";
+		$table = "jenis";
 		if ($this->db->table_exists($table))
 		{
 			$this->db->query(drop_foreign_key($table, 'api_key'));

@@ -2,13 +2,13 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Kategori Produk Baru</h1>
-        <p class="m-0">Kategori Produk</p>
+        <h1 class="m-0">Jenis Baru</h1>
+        <p class="m-0">Jenis</p>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="<?php echo base_url() ?>kategori_produk"></i>Kategori Produk</a></li>
-          <li class="breadcrumb-item active">Kategori Produk Baru</li>
+          <li class="breadcrumb-item"><a href="<?php echo base_url() ?>jenis"></i>Jenis</a></li>
+          <li class="breadcrumb-item active">Jenis Baru</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
@@ -21,9 +21,9 @@
             <form id="form" method="post" enctype="multipart/form-data">
                 <div class="card-body">
                     <div class="form-group row">
-                        <label class="form-label col-sm-3" for="">Nama Kategori Produk</label>
+                        <label class="form-label col-sm-3" for="">Nama Jenis</label>
                         <div class="col-sm-4">
-                            <input class="form-control" type="text" id="name" name="name" autocomplete="off" placeholder="Nama Kategori Produk">
+                            <input class="form-control" type="text" id="name" name="name" autocomplete="off" placeholder="Nama Jenis">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -36,7 +36,7 @@
                 <div class="card-footer">
                     <div class="row">
                         <div class="col-sm-12 text-right">
-                            <a href="<?php echo base_url() ?>kategori_produk" class="btn btn-danger">Batal</a>
+                            <a href="<?php echo base_url() ?>jenis" class="btn btn-danger">Batal</a>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>
@@ -47,4 +47,4 @@
 </section>
 
 
-<script data-main="<?php echo base_url() ?>assets/js/main/main-kategori-produk" src="<?php echo base_url() ?>assets/js/require.js"></script>
+<script data-main="<?php echo base_url() ?>assets/js/main/main-jenis" src="<?php echo base_url() ?>assets/js/require.js"></script>

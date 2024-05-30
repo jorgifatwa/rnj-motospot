@@ -52,18 +52,6 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label  class="form-label col-sm-4">Nama Bank</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="nama_bank" placeholder="Nama Bank" name="nama_bank" value="<?php echo $nama_bank; ?>">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label  class="form-label col-sm-4">No. Rekening</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control number" id="no_rekening" placeholder="No. Rekening" name="no_rekening" value="<?php echo $no_rekening; ?>">
-                                </div>
-                            </div>
-                            <div class="form-group row">
                                 <label class="form-label col-sm-4">Alamat</label>
                                 <div class="col-sm-8">
                                     <textarea class="form-control" name="address" placeholder="Alamat"><?php echo $address; ?></textarea>

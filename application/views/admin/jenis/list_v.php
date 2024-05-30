@@ -2,13 +2,13 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Kategori Produk</h1>
+        <h1 class="m-0">Jenis</h1>
         <p class="m-0">Mater Data</p>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="<?php echo base_url() ?>dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-          <li class="breadcrumb-item active">Kategori Produk</li>
+          <li class="breadcrumb-item active">jenis</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-sm-12 text-right">
                     <?php if ($is_can_create) {?>
-                        <a href="<?php echo base_url() ?>kategori_produk/create" class="btn btn-primary"><i class="fa fa-plus"></i> Kategori Produk</a>
+                        <a href="<?php echo base_url() ?>jenis/create" class="btn btn-primary"><i class="fa fa-plus"></i> Jenis</a>
                     <?php }?>
                 </div>
             </div>
@@ -44,4 +44,4 @@
         </div>
     </div>
 </section>
-<script data-main="<?php echo base_url() ?>assets/js/main/main-kategori-produk" src="<?php echo base_url() ?>assets/js/require.js"></script>
+<script data-main="<?php echo base_url() ?>assets/js/main/main-jenis" src="<?php echo base_url() ?>assets/js/require.js"></script>

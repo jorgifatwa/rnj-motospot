@@ -48,7 +48,7 @@ define([
                 "processing": true,
                 "serverSide": true,
                 "ajax":{
-                    "url": App.baseUrl+"jenis/dataList",
+                    "url": App.baseUrl+"cabang/dataList",
                     "dataType": "json",
                     "type": "POST",
                 },

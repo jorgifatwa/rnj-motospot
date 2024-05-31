@@ -82,8 +82,6 @@ define([
                     { "data": "role_name" },
                     { "data": "phone" },
                     { "data": "email" },
-                    { "data": "nama_bank" },
-                    { "data": "no_rekening" },
                     { "data": "action" ,"orderable": false}
                 ]
             });

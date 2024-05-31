@@ -173,8 +173,6 @@ class Migration_Install_ion_auth extends CI_Migration {
 			'last_name'               => 'istrator',
 			'company'                 => 'ADMIN',
 			'phone'                   => '0',
-			'nama_bank'               => 'BCA',
-			'no_rekening'             => '123456780',
 		);
 		$this->db->insert($this->tables['users'], $data);
 

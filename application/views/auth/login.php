@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Combucha - Login     </title>
+  <title>RNJ Motospot - Login     </title>
 
   <!-- Custom fonts for this template-->
   <link rel="icon" type="image/x-icon" href="<?php echo base_url() ?>assets/images/icon.png">
@@ -29,8 +29,8 @@
       <div class="col-md-8 bg-login h-100">
         <div class="login-illustration h-100">
           <div class="login-flex mt-5">
-            <img src="<?php echo base_url();?>assets/images/logo-no-bg.png" style="width: 600px;">
-            <h5 class="greeting" style="margin-top: -200px">Selamat Datang di <br><span>Aplikasi Pengelolaan Cafe Combucha</span></h5>
+            <img src="<?php echo base_url();?>assets/images/logo-rnj.png" style="width: 600px;">
+            <h5 class="greeting" style="margin-top: -50px">Selamat Datang di <br><span>Aplikasi RNJ Motospot</span></h5>
             <!-- <div class="text-center"><button type="button" class="btn btn-darkblue" data-toggle="modal" data-target="#exampleModal">Help</button></div> -->
           </div>
         </div>

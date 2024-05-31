@@ -26,9 +26,17 @@ define([
             $(".loadingpage").hide();
         },
         initEvent : function(){
-            $('#kategori_id').select2({
+            $('#cabang_id').select2({
                 width: "100%",
-                placeholder: "Pilih Kategori Produk",
+                placeholder: "Pilih Cabang",
+            });
+            $('#merk_id').select2({
+                width: "100%",
+                placeholder: "Pilih Merk",
+            });
+            $('#jenis_id').select2({
+                width: "100%",
+                placeholder: "Pilih Jenis",
             });
             $('#status').select2({
                 width: "100%",
@@ -55,7 +63,49 @@ define([
                 }));
             })
 
-            $('#harga_jual').on('input', function () {
+            $('#harga_open').on('input', function () {
+                // Membersihkan input dari karakter non-numerik, kecuali koma dan titik desimal
+                var cleanInput = $(this).val().replace(/[^\d.,]/g, '');
+            
+                // Hapus tanda desimal jika lebih dari satu
+                cleanInput = cleanInput.replace(/(\..*)\./g, '$1');
+            
+                // Ganti tanda titik dengan string kosong (untuk menghindari kesalahan dalam parsing)
+                cleanInput = cleanInput.replace(/\./g, '');
+            
+                // Ubah koma menjadi titik jika digunakan sebagai pemisah desimal
+                cleanInput = cleanInput.replace(/,/g, '.');
+            
+                // Parsing input jumlah uang menjadi angka desimal
+                var jumlahUang = parseFloat(cleanInput);
+                
+                $(this).val(jumlahUang.toLocaleString('id-ID', {
+                    maximumFractionDigits: 0
+                }));
+            })
+
+            $('#harga_net').on('input', function () {
+                // Membersihkan input dari karakter non-numerik, kecuali koma dan titik desimal
+                var cleanInput = $(this).val().replace(/[^\d.,]/g, '');
+            
+                // Hapus tanda desimal jika lebih dari satu
+                cleanInput = cleanInput.replace(/(\..*)\./g, '$1');
+            
+                // Ganti tanda titik dengan string kosong (untuk menghindari kesalahan dalam parsing)
+                cleanInput = cleanInput.replace(/\./g, '');
+            
+                // Ubah koma menjadi titik jika digunakan sebagai pemisah desimal
+                cleanInput = cleanInput.replace(/,/g, '.');
+            
+                // Parsing input jumlah uang menjadi angka desimal
+                var jumlahUang = parseFloat(cleanInput);
+                
+                $(this).val(jumlahUang.toLocaleString('id-ID', {
+                    maximumFractionDigits: 0
+                }));
+            })
+
+            $('#km').on('input', function () {
                 // Membersihkan input dari karakter non-numerik, kecuali koma dan titik desimal
                 var cleanInput = $(this).val().replace(/[^\d.,]/g, '');
             
@@ -98,18 +148,21 @@ define([
                 "processing": true,
                 "serverSide": true,
                 "ajax":{
-                    "url": App.baseUrl+"produk/dataList",
+                    "url": App.baseUrl+"motor/dataList",
                     "dataType": "json",
                     "type": "POST",
                 },
                 "columns": [
-                    { "data": "nama" },
-                    { "data": "kategori" },
+                    { "data": "created_at" },
+                    { "data": "merk_name" },
+                    { "data": "jenis_name" },
+                    { "data": "nik" },
+                    { "data": "km" },
+                    { "data": "pajak" },
+                    { "data": "cabang_name" },
                     { "data": "harga_modal" },
-                    { "data": "harga_jual" },
-                    { "data": "gambar" },
-                    { "data": "keterangan" },
-                    { "data": "status" },
+                    { "data": "harga_open" },
+                    { "data": "harga_net" },
                     { "data": "action" ,"orderable": false}
                 ]
             });

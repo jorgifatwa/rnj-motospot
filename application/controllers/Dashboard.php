@@ -17,20 +17,20 @@ class Dashboard extends Admin_Controller {
 			$this->data['content'] = 'errors/html/restrict';
 		}
 
-		$this->data['pendapatan_kotor'] = $this->pesanan_model->getPendapatan();
-		$total = array_reduce($this->data['pendapatan_kotor'], function($carry, $item) {
-			return $carry + $item->total;
-		}, 0);
-		$total_kotor = $total;
-		$this->data['pendapatan_kotor'] = "Rp. ".number_format($total);
+		// $this->data['pendapatan_kotor'] = $this->pesanan_model->getPendapatan();
+		// $total = array_reduce($this->data['pendapatan_kotor'], function($carry, $item) {
+		// 	return $carry + $item->total;
+		// }, 0);
+		// $total_kotor = $total;
+		// $this->data['pendapatan_kotor'] = "Rp. ".number_format($total);
 
-		$this->data['pendapatan_bersih'] = $this->pesanan_model->getPendapatanBersih();
-		$total = array_reduce($this->data['pendapatan_bersih'], function($carry, $item) {
-			return $carry + $item->total;
-		}, 0);
-		$total_bersih = $total;
-		$total = $total_kotor - $total_bersih;
-		$this->data['pendapatan_bersih'] = "Rp. ".number_format($total);
+		// $this->data['pendapatan_bersih'] = $this->pesanan_model->getPendapatanBersih();
+		// $total = array_reduce($this->data['pendapatan_bersih'], function($carry, $item) {
+		// 	return $carry + $item->total;
+		// }, 0);
+		// $total_bersih = $total;
+		// $total = $total_kotor - $total_bersih;
+		// $this->data['pendapatan_bersih'] = "Rp. ".number_format($total);
 
 		$this->load->view('admin/layouts/page', $this->data);
 	}

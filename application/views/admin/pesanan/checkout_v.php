@@ -7,7 +7,7 @@
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="<?php echo base_url() ?>kategori_produk"></i>Pesanan</a></li>
+          <li class="breadcrumb-item"><a href="<?php echo base_url() ?>pesanan"></i>Pesanan</a></li>
           <li class="breadcrumb-item active">Checkout</li>
         </ol>
       </div><!-- /.col -->
@@ -21,17 +21,6 @@
             <form id="form_checkout" action="<?php echo base_url('Pesanan/create_pesanan') ?>" method="post" enctype="multipart/form-data">
                 <div class="card-body">
                     <div class="form-group row">
-                        <label class="form-label col-sm-3" for="">Nama Pelanggan</label>
-                        <div class="col-sm-9">
-                            <select id="selectBox" class="js-example-basic-single form-control" name="nama_pelanggan">
-                                <option value="">Pilih Pelanggan</option>
-                                <?php foreach ($pelanggans as $key => $pelanggan) { ?>
-                                  <option value="<?= $pelanggan->id ?>"><?= $pelanggan->nama ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
                       <label class="form-label col-sm-3" for="">Metode Pembayaran</label>
                       <div class="form-check form-inline col-sm-9">
                         <div class="form-check mr-3">
@@ -40,14 +29,40 @@
                               Cash
                           </label>
                         </div>
-                        <div class="form-check">
+                        <div class="form-check mr-3">
                           <input class="form-check-input" type="radio" name="metode_pembayaran" id="qris" value="qris">
                           <label class="form-check-label" for="metode_pembayaran">
                               QRIS
                           </label>
                         </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="metode_pembayaran" id="booking" value="booking">
+                          <label class="form-check-label" for="metode_pembayaran">
+                              Booking
+                          </label>
+                        </div>
                         <p class="error-radio"></p>
                       </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="form-label col-sm-3">Daftar Motor Yang Dibeli</label>
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Motor</th>
+                            <th>Harga Motor</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php for ($i=0; $i < count($id_produk); $i++) {  ?>
+                          <tr>
+                              <input type="hidden" id="id_produk" name="id_produk[$i]" value="<?= $id_produk[$i] ?>">
+                              <td><?= $nama[$i] ?></td>
+                              <td><input type="text" class="form-control sub_total" id="sub-total-<?= $i ?>" name="sub_total[]" value="<?= $sub_total[$i] ?>"></td>
+                            </tr>
+                          <?php } ?>
+                        </tbody>
+                      </table>
                     </div>
                     <div class="form-group row">
                         <label class="form-label col-sm-3" for="">Total Pembayaran</label>
@@ -95,7 +110,7 @@
                     <hr class="border-bottom border-3">
                     <div class="row justify-content-center">
                         <div class="text-center col-md-6">
-                          <img width="200" class="mt-3 mx-auto" src="<?php echo base_url() ?>assets/images/logo-no-bg-cropped.png" alt="">
+                          <img width="200" class="mt-3 mx-auto" src="<?php echo base_url() ?>assets/images/logo-rnj.png" alt="">
                           <?php
                             // Atur zona waktu
                             date_default_timezone_set('Asia/Jakarta');
@@ -122,7 +137,7 @@
                                 <tr>
                                   <td><?php echo $quantity[$i] ?></td>
                                   <td class="text-left"><?php echo $nama[$i] ?></td>
-                                  <td><?php echo "Rp ".number_format($sub_total[$i]) ?></td>
+                                  <td class="sub_total_struk" id="sub_total_struk_<?= $i ?>"><?php echo "Rp ".number_format($sub_total[$i]) ?></td>
                                 </tr>
                               <?php } ?>
                               <tr class="border-top border-3">

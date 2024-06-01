@@ -7,10 +7,11 @@ class Pesanan extends Admin_Controller
 	{
 		parent::__construct();
 		$this->load->model('pesanan_model');
-		$this->load->model('produk_model');
-		$this->load->model('pelanggan_model');
+		$this->load->model('motor_model');
+		$this->load->model('cabang_model');
+		$this->load->model('jenis_model');
+		$this->load->model('merk_model');
 		$this->load->model('transaksi_model');
-		$this->load->model('pesanan_model');
         $this->load->library('pagination');
 	}
 
@@ -22,43 +23,11 @@ class Pesanan extends Admin_Controller
 		} else {
 			$this->data['content'] = 'errors/html/restrict';
 		}
+		
+		$this->data['cabangs'] = $this->cabang_model->getAllById();
+		$this->data['jeniss'] = $this->jenis_model->getAllById();
+		$this->data['merks'] = $this->merk_model->getAllById();
 
-		// Hitung total data
-		$total_data = $this->produk_model->record_count();
-
-		// Tentukan jumlah data per halaman
-		$per_page = 9;
-
-		// Hitung jumlah halaman jika total data tidak nol
-		if ($total_data > 0) {
-			$total_pages = ceil($total_data / $per_page);
-		} else {
-			$total_pages = 1; // Atur jumlah halaman menjadi 1 jika tidak ada data
-		}
-
-		// Ambil halaman saat ini
-		$page = isset($_GET['page']) ? $_GET['page'] : 1;
-
-		// Hitung offset (mulai) untuk data yang akan ditampilkan pada halaman ini
-		$offset = ($page - 1) * $per_page;
-
-		// Ambil data untuk halaman ini dari model
-		$this->data['data_produks'] = $this->produk_model->fetch_produk($per_page, $offset);
-
-		// Inisialisasi links
-		$this->data['links'] = '<ul class="pagination">';
-
-		// Tampilkan nomor halaman
-		for ($i = 1; $i <= $total_pages; $i++) {
-			// Tentukan kelas untuk tautan aktif atau non-aktif
-			$class = ($i == $page) ? 'active' : '';
-
-			// Tambahkan tautan ke links
-			$this->data['links'] .= '<li class="page-item ' . $class . '"><a class="page-link" href="?page=' . $i . '">' . $i . '</a></li>';
-		}
-
-		// Tambahkan penutup ul
-		$this->data['links'] .= '</ul>';
 		$this->load->view('admin/layouts/page', $this->data);
 
 	}
@@ -153,14 +122,13 @@ class Pesanan extends Admin_Controller
 		$this->data['quantity'] = $_POST['quantity'];
 		$this->data['total'] = 0;
 		for ($i = 0; $i < count($_POST['quantity']); $i++) {
-			$produk[$i] = $this->produk_model->getAllById(array("produk.id" => $_POST['id_produk'][$i]));
+			$produk[$i] = $this->motor_model->getAllById(array("motor.id" => $_POST['id_produk'][$i]));
 			foreach ($produk[$i] as $key => $value) {
-				$this->data['sub_total'][$i] = $value->harga_jual * intval($_POST['quantity'][$i]);
+				$this->data['sub_total'][$i] = $value->harga_open;
 				$this->data['total'] += $this->data['sub_total'][$i];
 			}
 		}
 		$this->data['nama'] = $_POST['nama'];
-		$this->data['pelanggans'] = $this->pelanggan_model->getAllById();
 		$this->data['content'] = 'admin/pesanan/checkout_v';
 		$this->load->view('admin/layouts/page', $this->data);
 	}

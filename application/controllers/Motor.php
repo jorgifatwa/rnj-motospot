@@ -21,6 +21,10 @@ class Motor extends Admin_Controller
 			$this->data['content'] = 'errors/html/restrict';
 		}
 
+		$this->data['cabangs'] = $this->cabang_model->getAllById();
+		$this->data['jeniss'] = $this->jenis_model->getAllById();
+		$this->data['merks'] = $this->merk_model->getAllById();
+
 		$this->load->view('admin/layouts/page', $this->data);
 	}
 
@@ -174,94 +178,134 @@ class Motor extends Admin_Controller
 	}
 
 	public function dataList() 
-	{
-		$columns = array(
-			0 => 'created_at',
-			1 => 'merk_name',
-			2 => 'jenis_name',
-			3 => 'nik',
-			4 => 'km',
-			5 => 'pajak',
-			6 => 'cabang_name',
-			7 => 'harga_modal',
-			8 => 'harga_open',
-			9 => 'harga_net',
-			10 => '',
-		);
+{
+    $columns = array(
+        0 => 'created_at',
+        1 => 'merk_name',
+        2 => 'jenis_name',
+        3 => 'nik',
+        4 => 'km',
+        5 => 'pajak',
+        6 => 'cabang_name',
+        7 => 'harga_modal',
+        8 => 'harga_open',
+        9 => 'harga_net',
+        10 => '',
+    );
 
-		$order = $columns[$this->input->post('order')[0]['column']];
-		$dir = $this->input->post('order')[0]['dir'];
-		$search = array();
-		$limit = 0;
-		$start = 0;
-		$totalData = $this->motor_model->getCountAllBy($limit, $start, $search, $order, $dir);
+    $order = $columns[$this->input->post('order')[0]['column']];
+    $dir = $this->input->post('order')[0]['dir'];
+    $search = array();
+    $where = array();
+    $limit = $this->input->post('length');
+    $start = $this->input->post('start');
+    $totalData = $this->motor_model->getCountAllBy($limit, $start, $search, $order, $dir);
 
-		if (!empty($this->input->post('search')['value'])) {
-			$search_value = $this->input->post('search')['value'];
-			$search = array(
-				"merk.nama" => $search_value,
-				"cabang.nama" => $search_value,
-				"jenis.nama" => $search_value,
-				"motor.nik" => $search_value,
-				"motor.km" => $search_value,
-				"motor.pajak" => $search_value,
-				"motor.harga_modal" => $search_value,
-				"motor.harga_open" => $search_value,
-				"motor.harga_net" => $search_value
-			);
-			$totalFiltered = $this->motor_model->getCountAllBy($limit, $start, $search, $order, $dir);
-		} else {
-			$totalFiltered = $totalData;
-		}
+    // Get filter values from POST request
+    $tanggal_publish_mulai = $this->input->post('tanggal_publish_mulai');
+    $tanggal_publish_akhir = $this->input->post('tanggal_publish_akhir');
+    $dari_harga = $this->input->post('dari_harga');
+    $sampai_harga = $this->input->post('sampai_harga');
+    $cabang_id = $this->input->post('cabang_id');
+    $jenis_id = $this->input->post('jenis_id');
+    $merk_id = $this->input->post('merk_id');
+    $nik = $this->input->post('nik');
+    $pesanan = $this->input->post('pesanan');
 
-		$limit = $this->input->post('length');
-		$start = $this->input->post('start');
-		$datas = $this->motor_model->getAllBy($limit, $start, $search, $order, $dir);
+    $filtered = false;
 
-		$new_data = array();
-		if (!empty($datas)) {
+    // Apply date range filter for 'created_at'
+    if (!empty($tanggal_publish_mulai) && !empty($tanggal_publish_akhir)) {
+		$tanggal_publish_akhir .= ' 23:59:59';
+        $where['motor.created_at >='] = $tanggal_publish_mulai;
+        $where['motor.created_at <='] = $tanggal_publish_akhir;
+        $filtered = true;
+    }
 
-			foreach ($datas as $key => $data) {
+    // Apply price range filter for 'harga_open'
+    if (!empty($dari_harga) && !empty($sampai_harga)) {
+        $where['motor.harga_open >='] = str_replace(".", "", $dari_harga);
+        $where['motor.harga_open <='] = str_replace(".", "", $sampai_harga);
+        $filtered = true;
+    }
 
-				$edit_url = "";
-				$delete_url = "";
+    // Other filters...
+    if (!empty($cabang_id)) {
+        $where['motor.cabang_id'] = $cabang_id;
+        $filtered = true;
+    }
 
+    if (!empty($jenis_id)) {
+        $where['motor.jenis_id'] = $jenis_id;
+        $filtered = true;
+    }
+
+    if (!empty($merk_id)) {
+        $where['motor.merk_id'] = $merk_id;
+        $filtered = true;
+    }
+
+    if (!empty($nik)) {
+        $where['motor.nik'] = $nik;
+        $filtered = true;
+    }
+
+    if ($filtered) {
+        $totalFiltered = $this->motor_model->getCountAllBy($limit, $start, $search, $order, $dir, $where);
+    } else {
+        $totalFiltered = $totalData;
+    }
+
+    $datas = $this->motor_model->getAllBy($limit, $start, $search, $order, $dir, $where);
+
+    $new_data = array();
+    if (!empty($datas)) {
+        foreach ($datas as $key => $data) {
+            $edit_url = "";
+            $delete_url = "";
+            $masukkan_keranjang = "";
+
+			if(!$pesanan){
 				if ($this->data['is_can_edit'] && $data->is_deleted == 0) {
 					$edit_url = "<a href='" . base_url() . "motor/edit/" . $data->id . "' class='btn btn-sm btn-info white'> Ubah</a>";
 				}
 				if ($this->data['is_can_delete']) {
-					$delete_url = "<a href='#'
-						url='" . base_url() . "motor/destroy/" . $data->id . "/" . $data->is_deleted . "'
-						class='btn btn-sm btn-danger white delete'>Hapus
-						</a>";
+					$delete_url = "<a href='#' url='" . base_url() . "motor/destroy/" . $data->id . "/" . $data->is_deleted . "' class='btn btn-sm btn-danger white delete'>Hapus</a>";
 				}
-
-				$nestedData['id'] = $start + $key + 1;
-				$nestedData['created_at'] = $data->created_at;
-				$nestedData['pajak'] = $data->pajak;
-				$nestedData['merk_name'] = $data->merk_name;
-				$nestedData['cabang_name'] = $data->cabang_name;
-				$nestedData['jenis_name'] = $data->jenis_name;
-				$nestedData['nik'] = $data->nik;
-				$nestedData['km'] = number_format($data->km);
-				$nestedData['harga_modal'] = "Rp. ".number_format($data->harga_modal);
-				$nestedData['harga_open'] = "Rp. ".number_format($data->harga_open);
-				$nestedData['harga_net'] = "Rp. ".number_format($data->harga_net);
-				$nestedData['action'] = $edit_url . " " . $delete_url;
-				
-				$new_data[] = $nestedData;
+			}else{
+				$masukkan_keranjang = "<button type='button' class='btn btn-sm btn-info white add-to-cart' data-id='".$data->id."' data-jenis='".$data->jenis_name."' data-merk='".$data->merk_name."' data-price='".$data->harga_open."'> Tambah Ke Keranjang</button>";
 			}
-		}
 
-		$json_data = array(
-			"draw" => intval($this->input->post('draw')),
-			"recordsTotal" => intval($totalData),
-			"recordsFiltered" => intval($totalFiltered),
-			"data" => $new_data,
-		);
+            $nestedData['id'] = $start + $key + 1;
+            $nestedData['created_at'] = $data->created_at;
+            $nestedData['pajak'] = $data->pajak;
+            $nestedData['merk_name'] = $data->merk_name;
+            $nestedData['cabang_name'] = $data->cabang_name;
+            $nestedData['jenis_name'] = $data->jenis_name;
+            $nestedData['nik'] = $data->nik;
+            $nestedData['km'] = number_format($data->km);
+            $nestedData['harga_modal'] = "Rp. " . number_format($data->harga_modal);
+            $nestedData['harga_open'] = "Rp. " . number_format($data->harga_open);
+            $nestedData['harga_net'] = "Rp. " . number_format($data->harga_net);
+            $nestedData['action'] = $edit_url . " " . $delete_url." ".$masukkan_keranjang;
 
-		echo json_encode($json_data);
-	}
+            $new_data[] = $nestedData;
+        }
+    }
+
+    $json_data = array(
+        "draw" => intval($this->input->post('draw')),
+        "recordsTotal" => intval($totalData),
+        "recordsFiltered" => intval($totalFiltered),
+        "data" => $new_data,
+    );
+
+    echo json_encode($json_data);
+}
+
+
+
+
 
 	public function destroy() 
 	{

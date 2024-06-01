@@ -20,39 +20,39 @@
         <div class="card">
             <form id="form" method="post" enctype="multipart/form-data">
                 <div class="card-body">
-                <div class="form-group row">
-                        <label class="form-label col-sm-3" for="">Pilih Cabang</label>
-                        <div class="col-sm-4">
-                            <select name="cabang_id" id="cabang_id" class="form-control">
-                            <option value="">Pilih Cabang</option>
-                                <?php foreach ($cabangs as $key => $cabang) { ?>
-                                <option value="<?php echo $cabang->id ?>" <?php if($cabang_id == $cabang->id){ echo "selected"; } ?>><?php echo $cabang->nama ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="form-label col-sm-3" for="">Pilih Merk</label>
-                        <div class="col-sm-4">
-                            <select name="merk_id" id="merk_id" class="form-control">
-                            <option value="">Pilih Merk</option>
-                            <?php foreach ($merks as $key => $merk) { ?>
-                                <option value="<?php echo $merk->id ?>" <?php if($merk_id == $merk->id){ echo "selected"; } ?>><?php echo $merk->nama ?></option>
-                            <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="form-label col-sm-3" for="">Pilih Jenis</label>
-                        <div class="col-sm-4">
-                            <select name="jenis_id" id="jenis_id" class="form-control">
-                            <option value="">Pilih Jenis</option>
-                                <?php foreach ($jeniss as $key => $jenis) { ?>
-                                <option value="<?php echo $jenis->id ?>" <?php if($jenis_id == $jenis->id){ echo "selected"; } ?>><?php echo $jenis->nama ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
+                  <div class="form-group row">
+                      <label class="form-label col-sm-3" for="">Pilih Cabang</label>
+                      <div class="col-sm-4">
+                          <select name="cabang_id" id="cabang_id" class="form-control">
+                          <option value="">Pilih Cabang</option>
+                              <?php foreach ($cabangs as $key => $cabang) { ?>
+                              <option value="<?php echo $cabang->id ?>" <?php if($cabang_id == $cabang->id){ echo "selected"; } ?>><?php echo $cabang->nama ?></option>
+                              <?php } ?>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="form-label col-sm-3" for="">Pilih Merk</label>
+                      <div class="col-sm-4">
+                          <select name="merk_id" id="merk_id" class="form-control">
+                          <option value="">Pilih Merk</option>
+                          <?php foreach ($merks as $key => $merk) { ?>
+                              <option value="<?php echo $merk->id ?>" <?php if($merk_id == $merk->id){ echo "selected"; } ?>><?php echo $merk->nama ?></option>
+                          <?php } ?>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="form-label col-sm-3" for="">Pilih Jenis</label>
+                      <div class="col-sm-4">
+                          <select name="jenis_id" id="jenis_id" class="form-control">
+                          <option value="">Pilih Jenis</option>
+                              <?php foreach ($jeniss as $key => $jenis) { ?>
+                              <option value="<?php echo $jenis->id ?>" <?php if($jenis_id == $jenis->id){ echo "selected"; } ?>><?php echo $jenis->nama ?></option>
+                              <?php } ?>
+                          </select>
+                      </div>
+                  </div>
                   <div class="form-group row">
                       <label class="form-label col-sm-3" for="">NIK</label>
                       <div class="col-sm-4">

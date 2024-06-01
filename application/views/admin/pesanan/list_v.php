@@ -28,9 +28,8 @@
                 <table class="table cart-table">
                     <thead>
                         <tr>
-                            <th>Produk</th>
+                            <th>Motor</th>
                             <th>Harga</th>
-                            <th>Jumlah</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -39,11 +38,11 @@
                     </tbody>
                     <tfoot>
                       <tr>
-                          <td colspan="3" class="text-right">Subtotal:</td>
+                          <td colspan="2" class="text-right">Subtotal:</td>
                           <td><span id="subtotal">Rp. 0.00</span></td>
                       </tr>
                       <tr>
-                          <td colspan="3" class="text-right">Total:</td>
+                          <td colspan="2" class="text-right">Total:</td>
                           <td><span id="total">Rp. 0.00</span></td>
                       </tr>
                   </tfoot>
@@ -59,58 +58,95 @@
     </div>
     <div class="card mb-3">
         <div class="card-header">
+          <h3>Filter</h3>
             <div class="row">
-              <h3>Daftar Menu</h3>
+              <div class="col-sm-4">
+                <label for="">Cabang</label>
+                <select name="cabang_id" id="cabang_id" class="form-control">
+                  <option value="">Pilih Cabang</option>
+                    <?php foreach ($cabangs as $key => $cabang) { ?>
+                      <option value="<?php echo $cabang->id ?>"><?php echo $cabang->nama ?></option>
+                    <?php } ?>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <label for="">Merk</label>
+                <select name="merk_id" id="merk_id" class="form-control">
+                  <option value="">Pilih Merk</option>
+                  <?php foreach ($merks as $key => $merk) { ?>
+                      <option value="<?php echo $merk->id ?>"><?php echo $merk->nama ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <label for="">Pilih Jenis</label>
+                <select name="jenis_id" id="jenis_id" class="form-control">
+                  <option value="">Pilih Jenis</option>
+                    <?php foreach ($jeniss as $key => $jenis) { ?>
+                    <option value="<?php echo $jenis->id ?>"><?php echo $jenis->nama ?></option>
+                    <?php } ?>
+                </select>
+              </div>
             </div>
-        </div>
-        <div class="card-body">
-          <div class="row mt-3 mb-3">
-            <div class="col-md-12">
-              <form id="search-form" action="<?php echo site_url('pesanan/search'); ?>" method="post">
-                <div class="form-group row">
-                  <div class="input-group col-md-12">
-                    <input type="text" name="keyword" class="form-control" placeholder="Cari produk">
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-primary">Cari</button>
-                    </div>
+            <div class="row mt-4">
+              <div class="col-sm-4">
+                <label for="">Tanggal Publish Mulai</label>
+                <input type="date" class="form-control" name="tanggal_publish_mulai" id="tanggal_publish_mulai">
+              </div>
+              <div class="col-sm-4">
+                <label for="">Tanggal Publish Akhir</label>
+                <input type="date" class="form-control" name="tanggal_publish_akhir" id="tanggal_publish_akhir">
+              </div>
+              <div class="col-sm-4">
+                <label for="">Range Harga Open</label>
+                <div class="row">
+                  <div class="col-sm-5">
+                      <input type="text" class="form-control" id="dari_harga" name="dari_harga" placeholder="Dari Harga">
                   </div>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div class="row" id="data-produk">
-            <?php foreach ($data_produks as $key => $produk) { ?>
-            <div class="col-md-4">
-              <div class="card" style="width: 18rem; height: 28rem;">
-                <img src="<?php echo base_url('uploads/produk/'.$produk->gambar) ?>" class="card-img-top" alt="<?php echo $produk->nama ?>">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <h5 class="card-title"><?php echo $produk->nama ?></h5>
-                      <p class="card-text text-secondary"><?php echo $produk->keterangan ?></p>
-                    </div>
+                  <div class="col-sm-2 text-center">
+                    -
                   </div>
-                </div>
-                <div class="card-footer">
-                  <div class="row">
-                    <div class="col-md-4">
-                      <p><?php echo "Rp.".number_format($produk->harga_jual) ?></p>
-                    </div>
-                    <div class="col-md-8 text-right">
-                      <a href="#" class="btn btn-primary add-to-cart" data-id="<?php echo $produk->id ?>" data-name="<?php echo $produk->nama ?>" data-price="<?php echo $produk->harga_jual ?>" data-image="<?php echo $produk->gambar ?>">Tambah</a>
-                    </div>
+                  <div class="col-sm-5">
+                      <input type="text" class="form-control" id="sampai_harga" name="sampai_harga" placeholder="Sampai Harga">
                   </div>
                 </div>
               </div>
             </div>
-          <?php } ?>
-          </div>
+            <div class="row mt-4">
+              <div class="col-sm-4">
+                <label for="">NIK</label>
+                <input type="text" class="form-control" id="nik" name="nik" placeholder="NIK">
+              </div>
+            </div>
+            <div class="row col-md-12 mt-3 mr-0">
+              <div class="col-md-12">
+                <button id="btn-cari" style="margin-right: -23px !important" class="btn float-right col-md-1 btn-lg btn-primary">Cari</button>
+                <button id="btn-reset" class="btn mr-2 float-right col-md-1 btn-lg btn-danger">Reset</button>
+              </div>
+            </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped table-bordered" id="table" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Tanggal Publish</th>
+                    <th>Merk</th>
+                    <th>Jenis</th>
+                    <th>NIK</th>
+                    <th>KM</th>
+                    <th>Pajak</th>
+                    <th>Cabang</th>
+                    <th>Harga Modal</th>
+                    <th>Harga Open</th>
+                    <th>Harga Nett</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
         </div>
       </div>
-      <div class="pagination-links text-right mb-2">
-          <nav aria-label="Page navigation" class="pagination-data">
-                  <?php echo $links; ?>
-          </nav>
-      </div>
+    </div>
 </section>
 <script data-main="<?php echo base_url() ?>assets/js/main/main-pesanan" src="<?php echo base_url() ?>assets/js/require.js"></script>

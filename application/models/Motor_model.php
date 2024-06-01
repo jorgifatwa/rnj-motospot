@@ -53,12 +53,13 @@ class Motor_model extends CI_Model
         return FALSE;
     }
 
-    function getAllBy($limit,$start,$search,$col,$dir)
+    function getAllBy($limit,$start,$search,$col,$dir, $where = array())
     {
         $this->db->select("motor.*, cabang.nama as cabang_name, merk.nama as merk_name, jenis.nama as jenis_name")->from("motor");  
 		$this->db->join("cabang", "cabang.id = motor.cabang_id");
 		$this->db->join("merk", "merk.id = motor.merk_id");
 		$this->db->join("jenis", "jenis.id = motor.jenis_id");
+        $this->db->where($where);  
         $this->db->where("motor.is_deleted",0);  
         $this->db->limit($limit,$start)->order_by($col,$dir);
         if(!empty($search)){
@@ -80,12 +81,13 @@ class Motor_model extends CI_Model
         }
     }
 
-    function getCountAllBy($limit,$start,$search,$order,$dir)
+    function getCountAllBy($limit,$start,$search,$order,$dir, $where = array())
     { 
         $this->db->select("motor.*, cabang.nama as cabang_name, merk.nama as merk_name, jenis.nama as jenis_name")->from("motor");  
 		$this->db->join("cabang", "cabang.id = motor.cabang_id");
 		$this->db->join("merk", "merk.id = motor.merk_id");
 		$this->db->join("jenis", "jenis.id = motor.jenis_id");
+        $this->db->where($where);  
         $this->db->where("motor.is_deleted",0);  
         if(!empty($search)){
             $this->db->group_start();

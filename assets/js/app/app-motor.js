@@ -125,6 +125,48 @@ define([
                     maximumFractionDigits: 0
                 }));
             })
+
+            $('#dari_harga').on('input', function () {
+                // Membersihkan input dari karakter non-numerik, kecuali koma dan titik desimal
+                var cleanInput = $(this).val().replace(/[^\d.,]/g, '');
+            
+                // Hapus tanda desimal jika lebih dari satu
+                cleanInput = cleanInput.replace(/(\..*)\./g, '$1');
+            
+                // Ganti tanda titik dengan string kosong (untuk menghindari kesalahan dalam parsing)
+                cleanInput = cleanInput.replace(/\./g, '');
+            
+                // Ubah koma menjadi titik jika digunakan sebagai pemisah desimal
+                cleanInput = cleanInput.replace(/,/g, '.');
+            
+                // Parsing input jumlah uang menjadi angka desimal
+                var jumlahUang = parseFloat(cleanInput);
+                
+                $(this).val(jumlahUang.toLocaleString('id-ID', {
+                    maximumFractionDigits: 0
+                }));
+            })
+
+            $('#sampai_harga').on('input', function () {
+                // Membersihkan input dari karakter non-numerik, kecuali koma dan titik desimal
+                var cleanInput = $(this).val().replace(/[^\d.,]/g, '');
+            
+                // Hapus tanda desimal jika lebih dari satu
+                cleanInput = cleanInput.replace(/(\..*)\./g, '$1');
+            
+                // Ganti tanda titik dengan string kosong (untuk menghindari kesalahan dalam parsing)
+                cleanInput = cleanInput.replace(/\./g, '');
+            
+                // Ubah koma menjadi titik jika digunakan sebagai pemisah desimal
+                cleanInput = cleanInput.replace(/,/g, '.');
+            
+                // Parsing input jumlah uang menjadi angka desimal
+                var jumlahUang = parseFloat(cleanInput);
+                
+                $(this).val(jumlahUang.toLocaleString('id-ID', {
+                    maximumFractionDigits: 0
+                }));
+            })
         },
         initTable : function(){
             App.table = $('#table').DataTable({
@@ -151,6 +193,17 @@ define([
                     "url": App.baseUrl+"motor/dataList",
                     "dataType": "json",
                     "type": "POST",
+                    data: function(d) {
+                        d.tanggal_publish_mulai = $('#tanggal_publish_mulai').val();
+                        d.tanggal_publish_akhir = $('#tanggal_publish_akhir').val();
+                        d.dari_harga = $('#dari_harga').val();
+                        d.sampai_harga = $('#sampai_harga').val();
+                        d.cabang_id = $('#cabang_id').val();
+                        d.jenis_id = $('#jenis_id').val();
+                        d.merk_id = $('#merk_id').val();
+                        d.nik = $('#nik').val();
+                        // Add other filters here if needed
+                    }
                 },
                 "columns": [
                     { "data": "created_at" },
@@ -166,6 +219,47 @@ define([
                     { "data": "action" ,"orderable": false}
                 ]
             });
+
+            // $('#btn-cari').on('click', function() {
+            //     var cabang_id = $("#cabang_id").val();
+            //     var jenis_id = $("#jenis_id").val();
+            //     var merk_id = $("#merk_id").val();
+            //     var tanggal_publish_mulai = $("#tanggal_publish_mulai").val();
+            //     var tanggal_publish_akhir = $("#tanggal_publish_akhir").val();
+            //     var dari_harga = $("#dari_harga").val();
+            //     var sampai_harga = $("#sampai_harga").val();
+            //     var nik = $("#nik").val();
+        
+            //     console.log({
+            //         cabang_id: cabang_id,
+            //         jenis_id: jenis_id,
+            //         merk_id: merk_id,
+            //         tanggal_publish_mulai: tanggal_publish_mulai,
+            //         tanggal_publish_akhir: tanggal_publish_akhir,
+            //         dari_harga: dari_harga,
+            //         sampai_harga: sampai_harga,
+            //         nik: nik
+            //     });
+        
+            //     App.table.draw();
+            // }); 
+            
+            $('#btn-cari').on('click', function() {
+                App.table.draw();
+            });
+
+            $('#btn-reset').on('click', function () {
+                $("#cabang_id").val('').trigger('change'); 
+                $("#merk_id").val('').trigger('change'); 
+                $("#jenis_id").val('').trigger('change'); 
+                $("#tanggal_publish_mulai").val('').trigger('change'); 
+                $("#tanggal_publish_akhir").val('').trigger('change'); 
+                $("#nik").val(''); 
+                $("#dari_harga").val(''); 
+                $("#sampai_harga").val(''); 
+
+                App.table.search( '' ).columns().search( '' ).draw();
+            })
         },
         initValidation : function(){
             if($("#form").length > 0){

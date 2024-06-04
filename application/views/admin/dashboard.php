@@ -20,7 +20,7 @@
 		<div class="col-lg-6 col-6">
 			<div class="small-box bg-success">
 			  <div class="inner">
-				<h3><?php echo "0"; ?></h3>
+				<h3><?php echo $pendapatan_bersih; ?></h3>
 				<p>Pendapatan Bersih Hari Ini</p>
 			  </div>
 			  <div class="icon">
@@ -34,7 +34,7 @@
 		<div class="col-lg-6 col-6">
 			<div class="small-box bg-primary">
 			  <div class="inner">
-				<h3><?php echo "0"; ?></h3>
+				<h3><?php echo $pendapatan_kotor; ?></h3>
 				<p>Pendapatan Kotor Hari Ini</p>
 			  </div>
 			  <div class="icon">

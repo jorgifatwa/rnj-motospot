@@ -17,20 +17,20 @@ class Dashboard extends Admin_Controller {
 			$this->data['content'] = 'errors/html/restrict';
 		}
 
-		// $this->data['pendapatan_kotor'] = $this->pesanan_model->getPendapatan();
-		// $total = array_reduce($this->data['pendapatan_kotor'], function($carry, $item) {
-		// 	return $carry + $item->total;
-		// }, 0);
-		// $total_kotor = $total;
-		// $this->data['pendapatan_kotor'] = "Rp. ".number_format($total);
+		$this->data['pendapatan_kotor'] = $this->pesanan_model->getPendapatan();
+		$total = array_reduce($this->data['pendapatan_kotor'], function($carry, $item) {
+			return $carry + $item->total;
+		}, 0);
+		$total_kotor = $total;
+		$this->data['pendapatan_kotor'] = "Rp. ".number_format($total);
 
-		// $this->data['pendapatan_bersih'] = $this->pesanan_model->getPendapatanBersih();
-		// $total = array_reduce($this->data['pendapatan_bersih'], function($carry, $item) {
-		// 	return $carry + $item->total;
-		// }, 0);
-		// $total_bersih = $total;
-		// $total = $total_kotor - $total_bersih;
-		// $this->data['pendapatan_bersih'] = "Rp. ".number_format($total);
+		$this->data['pendapatan_bersih'] = $this->pesanan_model->getPendapatanBersih();
+		$total = array_reduce($this->data['pendapatan_bersih'], function($carry, $item) {
+			return $carry + $item->total;
+		}, 0);
+		$total_bersih = $total;
+		$total = $total_kotor - $total_bersih;
+		$this->data['pendapatan_bersih'] = "Rp. ".number_format($total);
 
 		$this->load->view('admin/layouts/page', $this->data);
 	}
@@ -46,11 +46,11 @@ class Dashboard extends Admin_Controller {
 		for ($month = 1; $month <= 12; $month++) {
 			// Calculate total income for the current month and year
 			$totalPendapatanQuery = $this->db->query("
-				SELECT SUM(po.jumlah * pr.harga_modal) AS total_bersih, SUM(po.jumlah * pr.harga_jual) as total_jual
+				SELECT SUM(po.jumlah * pr.harga_modal) AS total_bersih, SUM(po.jumlah * po.harga_terjual) as total_jual
 				FROM pesanan po
-				JOIN produk pr ON po.id_produk = pr.id
+				JOIN motor pr ON po.id_produk = pr.id
 				JOIN transaksi t ON po.id_transaksi = t.id
-				WHERE t.status = 0
+				WHERE t.status = 1
 				AND po.is_deleted = 0
 				AND MONTH(t.created_at) = $month
 				AND YEAR(t.created_at) = $currentYear
@@ -96,11 +96,11 @@ class Dashboard extends Admin_Controller {
 		for ($year = $currentYear - 3; $year <= $currentYear; $year++) {
 			// Calculate total income for the current year
 			$totalPendapatanQuery = $this->db->query("
-				SELECT SUM(po.jumlah * pr.harga_modal) AS total_bersih, SUM(po.jumlah * pr.harga_jual) as total_jual
+				SELECT SUM(po.jumlah * pr.harga_modal) AS total_bersih, SUM(po.jumlah * po.harga_terjual) as total_jual
 				FROM pesanan po
-				JOIN produk pr ON po.id_produk = pr.id
+				JOIN motor pr ON po.id_produk = pr.id
 				JOIN transaksi t ON po.id_transaksi = t.id
-				WHERE t.status = 0
+				WHERE t.status = 1
 				AND po.is_deleted = 0
 				AND YEAR(t.created_at) = $year
 			");

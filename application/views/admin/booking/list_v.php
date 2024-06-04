@@ -2,13 +2,13 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">History Transaksi</h1>
+        <h1 class="m-0">Booking Transaksi</h1>
         <p class="m-0">Data Transaksi</p>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="<?php echo base_url() ?>dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-          <li class="breadcrumb-item active">History Transaksi</li>
+          <li class="breadcrumb-item active">Booking Transaksi</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
@@ -24,7 +24,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped table-bordered" id="table" width="100%" cellspacing="0">
+                <table class="table table-striped table-bordered" id="table-booking" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Tanggal Terjual</th>

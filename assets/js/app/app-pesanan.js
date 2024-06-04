@@ -35,6 +35,10 @@ define([
                 width: "100%",
                 placeholder: "Pilih Merk",
             });
+            $('#status').select2({
+                width: "100%",
+                placeholder: "Pilih Merk",
+            });
             $('#jenis_id').select2({
                 width: "100%",
                 placeholder: "Pilih Jenis",
@@ -76,11 +80,14 @@ define([
                         total += value;
                     }
                 });
-                $('#total_pembayaran').text('Rp ' + total.toLocaleString('id-ID'));
+                console.log('masuk total', total)
+                $('#total_pembayaran').val('Rp ' + total.toLocaleString('id-ID'));
+                $('.total_struk').text('Rp ' + total.toLocaleString('id-ID'));
                 return total;
             }
         
             $(document).on('input', '.sub_total', function() {
+                console.log('on sub total')
                 var index = $(this).data('index');
                 var cleanInput = $(this).val().replace(/[^\d.,]/g, '');
                 // Hapus tanda desimal jika lebih dari satu
@@ -90,6 +97,11 @@ define([
                 // Ubah koma menjadi titik jika digunakan sebagai pemisah desimal
                 cleanInput = cleanInput.replace(/,/g, '.');
                 var value = parseFloat(cleanInput);
+                
+                $(this).val(value.toLocaleString('id-ID', {
+                    maximumFractionDigits: 0
+                }));
+
                 if (!isNaN(value)) {
                     $('#sub_total_struk_' + index).text('Rp ' + value.toLocaleString('id-ID'));
                 }
@@ -399,6 +411,19 @@ define([
             
         },
         initTable : function(){
+            $('.sub_total').each(function() {
+                var cleanInput = $(this).val().replace(/[^\d.,]/g, '');
+                // Hapus tanda desimal jika lebih dari satu
+                cleanInput = cleanInput.replace(/(\..*)\./g, '$1');
+                // Ganti tanda titik dengan string kosong (untuk menghindari kesalahan dalam parsing)
+                cleanInput = cleanInput.replace(/\./g, '');
+                // Ubah koma menjadi titik jika digunakan sebagai pemisah desimal
+                cleanInput = cleanInput.replace(/,/g, '.');
+                var value = parseFloat(cleanInput);
+                $(this).val(value.toLocaleString('id-ID', {
+                    maximumFractionDigits: 0
+                }));
+            });
             App.table = $('#table').DataTable({
                 "language": {
                     "search": "Cari",
@@ -497,13 +522,13 @@ define([
                 $("#save-btn").removeAttr("disabled");
                 $("#form").validate({
                     rules: {
-                        name: {
+                        metode_pembayaran: {
                             required: true
                         },
                     },
                     messages: {
-                        name: {
-                            required: "Nama Harus Diisi"
+                        metode_pembayaran: {
+                            required: "Metode Pembayaran Harus Diddisi"
                         },
                     },
                     debug:true,
@@ -522,7 +547,7 @@ define([
                             }else if ( element.prop( "type" ) === "checkbox" ) {
                                 error.insertBefore( element.next( "label" ) );
                             }else if ( element.prop( "type" ) === "radio" ) {
-                                error.insertBefore( element.parent().parent().parent());
+                                error.insertBefore( element.parent().parent().parent().parent());
                             }else if ( element.parent().attr('class') === "input-group" ) {
                                 error.appendTo(element.parent().parent());
                             }else{
@@ -540,19 +565,30 @@ define([
                 $("#save-btn").removeAttr("disabled");
                 $("#form_checkout").validate({
                     rules: {
-                        nama_pelanggan: {
-                            required: true
-                        },
                         metode_pembayaran: {
                             required: true
                         },
+                        jumlah_uang: {
+                            required: function(element) {
+                                // Ambil nilai metode_pembayaran
+                                var metode_pembayaran = $("#metode_pembayaran").val();
+                                // Jumlah uang wajib diisi jika metode pembayaran adalah "cash"
+                                return metode_pembayaran === "cash";
+                            }
+                        },
+                        status: {
+                            required: true
+                        }
                     },
                     messages: {
-                        nama_pelanggan: {
-                            required: "Nama Pelanggan Harus Diisi"
-                        },
                         metode_pembayaran: {
                             required: "Metode Pembayaran Harus Diisi"
+                        },
+                        jumlah_uang: {
+                            required: "Jumlah Uang Harus Diisi"
+                        },
+                        status: {
+                            required: true
                         }
                     },
                     debug:true,
@@ -571,7 +607,7 @@ define([
                             }else if ( element.prop( "type" ) === "checkbox" ) {
                                 error.insertBefore( element.next( "label" ) );
                             }else if ( element.prop( "type" ) === "radio" ) {
-                                error.appendTo(element.parent().siblings('.error-radio'));
+                                error.appendTo(element.parent().parent().parent().parent().find('.error-radio'));
                             }else if ( element.parent().attr('class') === "input-group" ) {
                                 error.appendTo(element.parent().parent());
                             }else{

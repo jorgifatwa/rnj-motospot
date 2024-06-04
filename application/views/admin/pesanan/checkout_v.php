@@ -21,29 +21,29 @@
             <form id="form_checkout" action="<?php echo base_url('Pesanan/create_pesanan') ?>" method="post" enctype="multipart/form-data">
                 <div class="card-body">
                     <div class="form-group row">
+                      <label for="" class="form-label col-sm-3">Nama Pelanggan</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" name="nama_pelanggan" id="nama_pelanggan">
+                      </div>
+                    </div>
+                    <div class="form-group row">
                       <label class="form-label col-sm-3" for="">Metode Pembayaran</label>
                       <div class="form-check form-inline col-sm-9">
                         <div class="form-check mr-3">
-                          <input class="form-check-input" type="radio" name="metode_pembayaran" id="cash" value="cash">
+                          <input class="form-check-input" type="radio" name="metode_pembayaran" id="metode_pembayaran" value="cash">
                           <label class="form-check-label" for="metode_pembayaran">
                               Cash
                           </label>
                         </div>
                         <div class="form-check mr-3">
-                          <input class="form-check-input" type="radio" name="metode_pembayaran" id="qris" value="qris">
+                          <input class="form-check-input" type="radio" name="metode_pembayaran" id="metode_pembayaran" value="qris">
                           <label class="form-check-label" for="metode_pembayaran">
                               QRIS
                           </label>
                         </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="metode_pembayaran" id="booking" value="booking">
-                          <label class="form-check-label" for="metode_pembayaran">
-                              Booking
-                          </label>
-                        </div>
-                        <p class="error-radio"></p>
                       </div>
                     </div>
+                    <p class="error-radio"></p>
                     <div class="form-group row">
                       <label for="" class="form-label col-sm-3">Daftar Motor Yang Dibeli</label>
                       <table class="table">
@@ -58,7 +58,7 @@
                           <tr>
                               <input type="hidden" id="id_produk" name="id_produk[$i]" value="<?= $id_produk[$i] ?>">
                               <td><?= $nama[$i] ?></td>
-                              <td><input type="text" class="form-control sub_total" id="sub-total-<?= $i ?>" name="sub_total[]" value="<?= $sub_total[$i] ?>"></td>
+                              <td><input type="text" class="form-control sub_total" id="sub-total-<?= $i ?>" data-index="<?= $i ?>" name="sub_total[]" value="<?= $sub_total[$i] ?>"></td>
                             </tr>
                           <?php } ?>
                         </tbody>
@@ -102,6 +102,15 @@
                       </div>
                     </div>
                     <div class="form-group row">
+                      <label for="" class="form-label col-sm-3">Status</label>
+                      <di class="col-sm-9">
+                        <select name="status" class="form-control" id="status">
+                          <option value="1">Terjual</option>
+                          <option value="2">Booking</option>
+                        </select>
+                      </di>
+                    </div>
+                    <div class="form-group row">
                         <label class="form-label col-sm-3" for="">Keterangan</label>
                         <div class="col-sm-9">
                             <textarea name="keterangan" id="keterangan" cols="30" rows="5" class="form-control" placeholder="Keterangan"></textarea>
@@ -142,7 +151,7 @@
                               <?php } ?>
                               <tr class="border-top border-3">
                                 <td colspan="2" class="text-left"><h4>Total</h4></td>
-                                <td><?php echo "Rp ".number_format($total) ?></td>
+                                <td class="total_struk"><?php echo "Rp ".number_format($total) ?></td>
                               </tr>
                             </table>
                           </div>

@@ -135,43 +135,26 @@ class Pesanan extends Admin_Controller
 
 	public function create_pesanan() 
 	{
-		$nama_pelanggan = $this->input->post('nama_pelanggan');
-		if (!is_numeric($nama_pelanggan)) {
-			$data = array(
-				'nama' => $this->input->post('nama_pelanggan'),
-				'created_at' => date('Y-m-d H:i:s'),
-				'created_by' => $this->data['users']->id
-			);
-
-			$insert = $this->pelanggan_model->insert($data);
-		}
-
-		if(isset($insert)){
-			$data_transaksi = array(
-				'id_pelanggan' => $insert,
-				'status' => 0,
-				'created_at' => date('Y-m-d H:i:s'),
-				'created_by' => $this->data['users']->id
-			);
-		}else{
-			$data_transaksi = array(
-				'id_pelanggan' => $this->input->post('nama_pelanggan'),
-				'status' => 0,
-				'created_at' => date('Y-m-d H:i:s'),
-				'created_by' => $this->data['users']->id
-			);
-		}
+		$data_transaksi = array(
+			'status' => $this->input->post('status'),
+			'nama_pelanggan' => $this->input->post('nama_pelanggan'),
+			'keterangan' => $this->input->post('keterangan'),
+			'created_at' => date('Y-m-d H:i:s'),
+			'created_by' => $this->data['users']->id
+		);
 
 		$insert_transaksi = $this->transaksi_model->insert($data_transaksi);
 
 		$id_produk = $this->input->post('id_produk');
 		$quantity = $this->input->post('quantity');
+		$sub_total = $this->input->post('sub_total');
 		for ($i=0; $i < count($id_produk); $i++) { 
 			$data_pesanan = array(
 				'tanggal_pesanan' => date('Y-m-d H:i:s'),
 				'id_transaksi' => $insert_transaksi,
 				'id_produk' => $id_produk[$i],
-				'jumlah' => $quantity[$i],
+				'harga_terjual' => str_replace(".", "", $sub_total[$i]),
+				'jumlah' => 1,
 				'keterangan' => '',
 				'created_at' => date('Y-m-d H:i:s'),
 				'created_by' => $this->data['users']->id

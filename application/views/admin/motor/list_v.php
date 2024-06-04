@@ -56,6 +56,7 @@
                   </select>
                 </div>
               </div>
+              <?php if($this->data['users']->id == 1){ ?>
               <div class="row mt-4">
                 <div class="col-sm-4">
                   <label for="">Tanggal Publish Mulai</label>
@@ -80,6 +81,7 @@
                   </div>
                 </div>
               </div>
+              <?php } ?>
               <div class="row mt-4">
                 <div class="col-sm-4">
                   <label for="">NIK</label>
@@ -108,6 +110,7 @@
                             <th>Harga Modal</th>
                             <th>Harga Open</th>
                             <th>Harga Nett</th>
+                            <th>Status</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>

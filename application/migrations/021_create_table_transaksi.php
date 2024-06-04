@@ -50,7 +50,7 @@ class Migration_create_table_transaksi extends CI_Migration {
 
 	public function down()
 	{
-		$table = "pelanggan";
+		$table = "transaksi";
 		if ($this->db->table_exists($table))
 		{
 			$this->db->query(drop_foreign_key($table, 'api_key'));

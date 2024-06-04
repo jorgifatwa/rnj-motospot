@@ -21,8 +21,10 @@ class Pesanan_model extends CI_Model
     }
  
     public function getAllById($where = array()){
-        $this->db->select("pesanan.*, produk.harga_jual as harga_jual, produk.nama as nama_produk")->from("pesanan"); 
-        $this->db->join("produk", "pesanan.id_produk = produk.id");
+        $this->db->select("pesanan.*, merk.nama as merk_nama, jenis.nama as jenis_nama")->from("pesanan"); 
+        $this->db->join("motor", "pesanan.id_produk = motor.id");
+        $this->db->join("merk", "motor.merk_id = merk.id");
+        $this->db->join("jenis", "motor.jenis_id = jenis.id");
         $this->db->join("transaksi", "pesanan.id_transaksi = transaksi.id"); 
         $this->db->where($where);  
         $this->db->where("pesanan.is_deleted",0);  
@@ -109,12 +111,11 @@ class Pesanan_model extends CI_Model
     } 
 
     function getPendapatan(){
-        $this->db->select("SUM(pesanan.jumlah * produk.harga_jual) AS total");
+        $this->db->select("SUM(pesanan.jumlah * pesanan.harga_terjual) AS total");
         $this->db->from("pesanan");
-        $this->db->join("produk", "pesanan.id_produk = produk.id");
         $this->db->join("transaksi", "pesanan.id_transaksi = transaksi.id");
         $this->db->where("pesanan.is_deleted", 0);  
-        $this->db->where("transaksi.status", 0);  
+        $this->db->where("transaksi.status", 1);  
         $this->db->where("DATE(transaksi.created_at)", date("Y-m-d"));  
 
         // if(!empty($search)){
@@ -133,12 +134,12 @@ class Pesanan_model extends CI_Model
     }
 
     function getPendapatanBersih(){
-        $this->db->select("SUM(pesanan.jumlah * produk.harga_modal) AS total");
+        $this->db->select("SUM(pesanan.jumlah * motor.harga_modal) AS total");
         $this->db->from("pesanan");
-        $this->db->join("produk", "pesanan.id_produk = produk.id");
+        $this->db->join("motor", "pesanan.id_produk = motor.id");
         $this->db->join("transaksi", "pesanan.id_transaksi = transaksi.id");
         $this->db->where("pesanan.is_deleted", 0);  
-        $this->db->where("transaksi.status", 0);  
+        $this->db->where("transaksi.status", 1);  
         $this->db->where("DATE(transaksi.created_at)", date("Y-m-d"));  
 
         // if(!empty($search)){

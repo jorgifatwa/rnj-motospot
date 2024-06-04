@@ -10,8 +10,7 @@ class Transaksi extends Admin_Controller
 	{
 		parent::__construct();
 		$this->load->model('transaksi_model');
-		$this->load->model('biaya_tambahan_model');
-		$this->load->model('travel_model');
+		$this->load->model('pesanan_model');
 	}
 
 	public function index() 
@@ -138,89 +137,27 @@ class Transaksi extends Admin_Controller
 
 	public function detail() 
 	{
-
-		$this->form_validation->set_rules('tanggal_keberangkatan', "Tanggal Keberangkatan Harus Diisi", 'trim|required');
-		$this->form_validation->set_rules('no_flight', "No. Flight Harus Diisi", 'trim|required');
-		$this->form_validation->set_rules('travel_id', "Nama Travel Harus Diisi", 'trim|required');
-		$this->form_validation->set_rules('harga', "Harga Harus Diisi", 'trim|required');
-		$this->form_validation->set_rules('jumlah_pax', "Jumlah Pax Harus Diisi", 'trim|required');
-		$this->form_validation->set_rules('status', "Status Harus Diisi", 'trim|required');
-		$this->form_validation->set_rules('flight', "Flight Harus Diisi", 'trim|required');
-		$this->form_validation->set_rules('keterangan_tambahan', "Keterangan Harus Diisi", 'trim|required');
-
-
-		if ($this->form_validation->run() === TRUE) {
-			
-
-			$data = array(
-				'tanggal_keberangkatan' => $this->input->post('tanggal_keberangkatan'),
-				'no_flight' => $this->input->post('no_flight'),
-				'travel_id' => $this->input->post('travel_id'),
-				'harga' => str_replace('.', '', $this->input->post('harga')),
-				'jumlah_pax' => str_replace('.', '', $this->input->post('jumlah_pax')),
-				'status' => $this->input->post('status'),
-				'keterangan' => $this->input->post('flight'),
-				'keterangan_tambahan' => $this->input->post('keterangan_tambahan'),
-				'created_at' => date('Y-m-d H:i:s'),
-				'created_by' => $this->data['users']->id
-			);
-
+		if (!empty($_POST)) {
 			$id = $this->input->post('id');
-
-			$update = $this->transaksi_model->update($data, array("transaksi.id" => $id));
-
-			if ($update) {
-				$this->session->set_flashdata('message', "transaksi Berhasil Diubah");
-				redirect("transaksi", "refresh");
-			} else {
-				$this->session->set_flashdata('message_error', "transaksi Gagal Diubah");
-				redirect("transaksi", "refresh");
-			}
+			$this->session->set_flashdata('message_error', validation_errors());
+			return redirect("transaksi/edit/" . $id);
 		} else {
-			if (!empty($_POST)) {
-				$id = $this->input->post('id');
-				$this->session->set_flashdata('message_error', validation_errors());
-				return redirect("transaksi/edit/" . $id);
-			} else {
-				$this->data['id'] = $this->uri->segment(3);
-				$transaksi = $this->transaksi_model->getAllById(array("transaksi.id" => $this->data['id']));
-				$this->data['travels'] = $this->travel_model->getAllById();
-				$this->data['biayas'] = $this->biaya_tambahan_model->getAllById(array("transaksi_id" => $this->data['id']));
-				$this->data['id'] 	= (!empty($transaksi)) ? $transaksi[0]->id : "";
-				$this->data['tanggal_keberangkatan'] 	= (!empty($transaksi)) ? $transaksi[0]->tanggal_keberangkatan : "";
-				$this->data['no_flight'] 	= (!empty($transaksi)) ? $transaksi[0]->no_flight : "";
-				$this->data['travel_id'] 	= (!empty($transaksi)) ? $transaksi[0]->travel_id : "";
-				$this->data['harga'] 	= (!empty($transaksi)) ? $transaksi[0]->harga : "";
-				$this->data['jumlah_pax'] 	= (!empty($transaksi)) ? $transaksi[0]->jumlah_pax : "";
-				$this->data['fee_tl'] 	= (!empty($transaksi)) ? $transaksi[0]->fee_tl : "";
-				$this->data['keterangan'] 	= (!empty($transaksi)) ? $transaksi[0]->keterangan : "";
-				$this->data['keterangan_tambahan'] 	= (!empty($transaksi)) ? $transaksi[0]->keterangan_tambahan : "";
-				$this->data['status'] 	= (!empty($transaksi)) ? $transaksi[0]->status : "";
-				$this->data['key_status'] 	= (!empty($transaksi)) ? $transaksi[0]->status : "";
+			$this->data['id'] = $this->uri->segment(3);
+			$transaksi = $this->transaksi_model->getAllById(array("transaksi.id" => $this->data['id']));
+			$this->data['pesanans'] = $this->pesanan_model->getAllById(array("id_transaksi" => $this->data['id']));
+			$this->data['id'] 	= (!empty($transaksi)) ? $transaksi[0]->id : "";
+			$this->data['tanggal_terjual'] 	= (!empty($transaksi)) ? $transaksi[0]->created_at : "";
+			$this->data['status'] 	= (!empty($transaksi)) ? $transaksi[0]->status : "";
+			$this->data['nama_pelanggan'] 	= (!empty($transaksi)) ? $transaksi[0]->nama_pelanggan : "";
+			$this->data['keterangan'] 	= (!empty($transaksi)) ? $transaksi[0]->keterangan : "";
 
-				if($this->data['status'] == 0){
-					$this->data['status'] = "Lunas";
-				}else{
-					$this->data['status'] = "Belum Lunas";
-				}
-
-				if($this->data['jumlah_pax'] >= 40){
-					$total_jumlah_pax = $this->data['jumlah_pax'] / 40;
-					$total_jumlah_pax = floor($total_jumlah_pax);
-					$this->data['total_fee'] = $this->data['harga'] * $total_jumlah_pax;
-				}else{
-					$this->data['total_fee'] = 0;
-				}
-
-				$this->data['nama_travel'] 	= (!empty($transaksi)) ? $transaksi[0]->nama_travel : "";
-				$this->data['nama_bank'] 	= (!empty($this->data['users'])) ? $this->data['users']->nama_bank : "";
-				$this->data['no_rekening'] 	= (!empty($this->data['users'])) ? $this->data['users']->no_rekening : "";
-				$this->data['nama_lengkap'] 	= (!empty($this->data['users'])) ? $this->data['users']->first_name." ".$this->data['users']->last_name : "";
-				$this->data['content'] = 'admin/transaksi/detail_v';
-				$this->load->view('admin/layouts/page', $this->data);
+			if(!empty($transaksi)){
+				$this->data['status_terjual'] =  $transaksi[0]->status == 1 ? 'Terjual' : ($transaksi[0]->status == 2 ? 'Booking' : 'Cancel');
 			}
-		}
 
+			$this->data['content'] = 'admin/transaksi/detail_v';
+			$this->load->view('admin/layouts/page', $this->data);
+		}
 	}
 
 	public function dataList() 
@@ -332,6 +269,7 @@ class Transaksi extends Admin_Controller
 				'is_deleted' => ($is_deleted == 1) ? 0 : 1,
 			);
 			$update = $this->transaksi_model->update($data, array("id" => $id));
+			$update = $this->pesanan_model->update($data, array("id_transaksi" => $id));
 
 			$response_data['data'] = $data;
 			$response_data['msg'] = "transaksi Berhasil di Hapus";

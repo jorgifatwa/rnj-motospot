@@ -21,8 +21,7 @@ class Transaksi_model extends CI_Model
     }
 
     public function getAllById($where = array()){
-        $this->db->select("transaksi.*, travel.nama as nama_travel")->from("transaksi");  
-		$this->db->join("travel", "travel.id = transaksi.travel_id");
+        $this->db->select("transaksi.*")->from("transaksi");  
         $this->db->where($where);  
         $this->db->where("transaksi.is_deleted",0);  
 
@@ -53,9 +52,7 @@ class Transaksi_model extends CI_Model
 
     function getAllBy($limit,$start,$search,$col,$dir)
     {
-        $this->db->select("transaksi.*, travel.nama as nama_travel, users.first_name as nama_karyawan")->from("transaksi");   
-		$this->db->join("travel", "travel.id = transaksi.travel_id");
-		$this->db->join("users", "users.id = transaksi.created_by");
+        $this->db->select("transaksi.*")->from("transaksi");   
         $this->db->where("transaksi.is_deleted",0);  
         $this->db->limit($limit,$start)->order_by($col,$dir);
         if(!empty($search)){
@@ -79,10 +76,51 @@ class Transaksi_model extends CI_Model
 
     function getCountAllBy($limit,$start,$search,$order,$dir)
     { 
-        $this->db->select("transaksi.*, travel.nama as nama_travel, users.first_name as nama_karyawan")->from("transaksi");   
-		$this->db->join("travel", "travel.id = transaksi.travel_id");
-		$this->db->join("users", "users.id = transaksi.created_by");
+        $this->db->select("transaksi.*")->from("transaksi");   
         $this->db->where("transaksi.is_deleted",0);  
+        if(!empty($search)){
+            $this->db->group_start();
+            foreach($search as $key => $value){
+                $this->db->or_like($key,$value);    
+            }   
+            $this->db->group_end();
+        } 
+ 
+        $result = $this->db->get();
+    
+        return $result->num_rows();
+    }
+
+    function getAllByBooking($limit,$start,$search,$col,$dir)
+    {
+        $this->db->select("transaksi.*")->from("transaksi");   
+        $this->db->where("transaksi.is_deleted",0);  
+        $this->db->where("transaksi.status",2);  
+        $this->db->limit($limit,$start)->order_by($col,$dir);
+        if(!empty($search)){
+            $this->db->group_start();
+            foreach($search as $key => $value){
+                $this->db->or_like($key,$value);    
+            }   
+            $this->db->group_end();
+        } 
+  
+        $result = $this->db->get();
+        if($result->num_rows()>0)
+        {
+            return $result->result();  
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    function getCountAllByBooking($limit,$start,$search,$order,$dir)
+    { 
+        $this->db->select("transaksi.*")->from("transaksi");   
+        $this->db->where("transaksi.is_deleted",0);  
+        $this->db->where("transaksi.status",2);  
         if(!empty($search)){
             $this->db->group_start();
             foreach($search as $key => $value){

@@ -216,6 +216,7 @@ define([
                     { "data": "harga_modal" },
                     { "data": "harga_open" },
                     { "data": "harga_net" },
+                    { "data": "status" },
                     { "data": "action" ,"orderable": false}
                 ]
             });

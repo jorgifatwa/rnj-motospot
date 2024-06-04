@@ -113,7 +113,7 @@ define([
                     text: 'Pendapatan Bersih Perbulan'
                 },
                 subtitle: {
-                    text: 'Combucha'
+                    text: 'RNJ Motospot'
                 },
 
                 xAxis: {
@@ -183,7 +183,7 @@ define([
                     text: 'Pendapatan Bersih Pertahun'
                 },
                 subtitle: {
-                    text: 'Combucha'
+                    text: 'RNJ Motospot'
                 },
         
                 xAxis: {

@@ -30,8 +30,36 @@ define([
             
 		}, 
         initEvent : function(){   
-            
+            $('#cabang_id').select2({
+                width: "100%",
+                placeholder: "Pilih Cabang",
+            });
 
+            $('#cabang_id').on('change', function (e) {
+                e.preventDefault();  // Prevent the default action of the event
+            
+                var cabang_id = $(this).val();
+            
+                $.ajax({
+                    type: 'POST',
+                    url: App.baseUrl + 'dashboard/get_pendapatan_kotor_bersih',
+                    data: { cabang_id: cabang_id },
+                    success: function(response) {
+                        try {
+                            var data = JSON.parse(response);
+                            $('#pendapatan_kotor').html(data.pendapatan_kotor);
+                            $('#pendapatan_bersih').html(data.pendapatan_bersih);
+                        } catch (e) {
+                            console.error('Parsing error:', e);
+                            console.error('Response received:', response);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX error:', status, error);
+                    }
+                });
+            });
+               
         },
         initData : function(){
 

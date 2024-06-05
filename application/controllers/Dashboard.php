@@ -8,6 +8,7 @@ class Dashboard extends Admin_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('pesanan_model');
+		$this->load->model('cabang_model');
 	}
 	public function index() {
 		$this->load->helper('url');
@@ -32,7 +33,33 @@ class Dashboard extends Admin_Controller {
 		$total = $total_kotor - $total_bersih;
 		$this->data['pendapatan_bersih'] = "Rp. ".number_format($total);
 
+		$this->data['cabangs'] = $this->cabang_model->getAllById();
+
 		$this->load->view('admin/layouts/page', $this->data);
+	}
+
+	public function get_pendapatan_kotor_bersih(){
+		$where = array();
+		if($this->input->post('cabang_id') != 'all'){
+			$where = array('motor.cabang_id' => $this->input->post('cabang_id'));
+		}
+
+		$this->data['pendapatan_kotor'] = $this->pesanan_model->getPendapatan($where);
+		$total = array_reduce($this->data['pendapatan_kotor'], function($carry, $item) {
+			return $carry + $item->total;
+		}, 0);
+		$total_kotor = $total;
+		$this->data['pendapatan_kotor'] = "Rp. ".number_format($total);
+
+		$this->data['pendapatan_bersih'] = $this->pesanan_model->getPendapatanBersih($where);
+		$total = array_reduce($this->data['pendapatan_bersih'], function($carry, $item) {
+			return $carry + $item->total;
+		}, 0);
+		$total_bersih = $total;
+		$total = $total_kotor - $total_bersih;
+		$this->data['pendapatan_bersih'] = "Rp. ".number_format($total);
+
+		print_r(json_encode($this->data));
 	}
 
 	public function grafikPendapatan() {

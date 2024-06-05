@@ -17,10 +17,24 @@
 <!-- Main content -->
 <section class="content for-dashboard">
 	<div class="row">
+		<div class="col-lg-12">
+			<div class="form-group">
+				<label for="">Pilih Cabang</label>
+				<select name="cabang_id" class="form-control" id="cabang_id">
+					<option value="">Pilih Cabang</option>
+					<?php foreach ($cabangs as $key => $cabang) { ?>
+						<option value="<?php echo $cabang->id ?>"><?php echo $cabang->nama ?></option>
+					<?php } ?>
+					<option value="all">Semua Cabang</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="row">
 		<div class="col-lg-6 col-6">
 			<div class="small-box bg-success">
 			  <div class="inner">
-				<h3><?php echo $pendapatan_bersih; ?></h3>
+				<h3 id="pendapatan_bersih"><?php echo $pendapatan_bersih; ?></h3>
 				<p>Pendapatan Bersih Hari Ini</p>
 			  </div>
 			  <div class="icon">
@@ -34,7 +48,7 @@
 		<div class="col-lg-6 col-6">
 			<div class="small-box bg-primary">
 			  <div class="inner">
-				<h3><?php echo $pendapatan_kotor; ?></h3>
+				<h3 id="pendapatan_kotor"><?php echo $pendapatan_kotor; ?></h3>
 				<p>Pendapatan Kotor Hari Ini</p>
 			  </div>
 			  <div class="icon">

@@ -110,10 +110,12 @@ class Pesanan_model extends CI_Model
         return $result->num_rows();
     } 
 
-    function getPendapatan(){
+    function getPendapatan($where = array()){
         $this->db->select("SUM(pesanan.jumlah * pesanan.harga_terjual) AS total");
         $this->db->from("pesanan");
+        $this->db->join("motor", "pesanan.id_produk = motor.id");
         $this->db->join("transaksi", "pesanan.id_transaksi = transaksi.id");
+        $this->db->where($where);  
         $this->db->where("pesanan.is_deleted", 0);  
         $this->db->where("transaksi.status", 1);  
         $this->db->where("DATE(transaksi.created_at)", date("Y-m-d"));  
@@ -133,11 +135,12 @@ class Pesanan_model extends CI_Model
         return $result->result();  
     }
 
-    function getPendapatanBersih(){
+    function getPendapatanBersih($where = array()){
         $this->db->select("SUM(pesanan.jumlah * motor.harga_modal) AS total");
         $this->db->from("pesanan");
         $this->db->join("motor", "pesanan.id_produk = motor.id");
         $this->db->join("transaksi", "pesanan.id_transaksi = transaksi.id");
+        $this->db->where($where);  
         $this->db->where("pesanan.is_deleted", 0);  
         $this->db->where("transaksi.status", 1);  
         $this->db->where("DATE(transaksi.created_at)", date("Y-m-d"));  

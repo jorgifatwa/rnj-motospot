@@ -69,19 +69,39 @@ class Dashboard extends Admin_Controller {
 		// Initialize an array to store monthly data
 		$monthlyData = [];
 
+		$cabang_id = 0;
+
+		if($this->input->post()){
+			$cabang_id = $this->input->post('cabang_id');
+		}
+
 		// Loop through each month (from January to December)
 		for ($month = 1; $month <= 12; $month++) {
 			// Calculate total income for the current month and year
-			$totalPendapatanQuery = $this->db->query("
-				SELECT SUM(po.jumlah * pr.harga_modal) AS total_bersih, SUM(po.jumlah * po.harga_terjual) as total_jual
-				FROM pesanan po
-				JOIN motor pr ON po.id_produk = pr.id
-				JOIN transaksi t ON po.id_transaksi = t.id
-				WHERE t.status = 1
-				AND po.is_deleted = 0
-				AND MONTH(t.created_at) = $month
-				AND YEAR(t.created_at) = $currentYear
-			");
+			if($this->input->post() && $cabang_id != 'all'){
+				$totalPendapatanQuery = $this->db->query("
+					SELECT SUM(po.jumlah * pr.harga_modal) AS total_bersih, SUM(po.jumlah * po.harga_terjual) as total_jual
+					FROM pesanan po
+					JOIN motor pr ON po.id_produk = pr.id
+					JOIN transaksi t ON po.id_transaksi = t.id
+					WHERE t.status = 1
+					AND po.is_deleted = 0
+					AND pr.cabang_id = $cabang_id
+					AND MONTH(t.created_at) = $month
+					AND YEAR(t.created_at) = $currentYear
+				");
+			}else{
+				$totalPendapatanQuery = $this->db->query("
+					SELECT SUM(po.jumlah * pr.harga_modal) AS total_bersih, SUM(po.jumlah * po.harga_terjual) as total_jual
+					FROM pesanan po
+					JOIN motor pr ON po.id_produk = pr.id
+					JOIN transaksi t ON po.id_transaksi = t.id
+					WHERE t.status = 1
+					AND po.is_deleted = 0
+					AND MONTH(t.created_at) = $month
+					AND YEAR(t.created_at) = $currentYear
+				");
+			}
 
 			$totalPendapatanResult = $totalPendapatanQuery->row();
 			if($totalPendapatanResult){
@@ -119,18 +139,37 @@ class Dashboard extends Admin_Controller {
 		// Initialize an array to store yearly data
 		$yearlyData = [];
 
+		$cabang_id = 0;
+
+		if($this->input->post()){
+			$cabang_id = $this->input->post('cabang_id');
+		}
+
 		// Loop through each year (you can adjust the range as needed)
 		for ($year = $currentYear - 3; $year <= $currentYear; $year++) {
 			// Calculate total income for the current year
-			$totalPendapatanQuery = $this->db->query("
-				SELECT SUM(po.jumlah * pr.harga_modal) AS total_bersih, SUM(po.jumlah * po.harga_terjual) as total_jual
-				FROM pesanan po
-				JOIN motor pr ON po.id_produk = pr.id
-				JOIN transaksi t ON po.id_transaksi = t.id
-				WHERE t.status = 1
-				AND po.is_deleted = 0
-				AND YEAR(t.created_at) = $year
-			");
+			if($this->input->post() && $cabang_id != 'all'){
+				$totalPendapatanQuery = $this->db->query("
+					SELECT SUM(po.jumlah * pr.harga_modal) AS total_bersih, SUM(po.jumlah * po.harga_terjual) as total_jual
+					FROM pesanan po
+					JOIN motor pr ON po.id_produk = pr.id
+					JOIN transaksi t ON po.id_transaksi = t.id
+					WHERE t.status = 1
+					AND pr.cabang_id = $cabang_id
+					AND po.is_deleted = 0
+					AND YEAR(t.created_at) = $year
+				");
+			}else{
+				$totalPendapatanQuery = $this->db->query("
+					SELECT SUM(po.jumlah * pr.harga_modal) AS total_bersih, SUM(po.jumlah * po.harga_terjual) as total_jual
+					FROM pesanan po
+					JOIN motor pr ON po.id_produk = pr.id
+					JOIN transaksi t ON po.id_transaksi = t.id
+					WHERE t.status = 1
+					AND po.is_deleted = 0
+					AND YEAR(t.created_at) = $year
+				");
+			}
 
 
 			$totalPendapatanResult = $totalPendapatanQuery->row();

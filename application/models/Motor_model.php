@@ -60,6 +60,7 @@ class Motor_model extends CI_Model
 		$this->db->join("merk", "merk.id = motor.merk_id");
 		$this->db->join("jenis", "jenis.id = motor.jenis_id");
         $this->db->where($where);  
+        $this->db->where("motor.status_terjual",0);  
         $this->db->where("motor.is_deleted",0);  
         $this->db->limit($limit,$start)->order_by($col,$dir);
         if(!empty($search)){
@@ -88,6 +89,7 @@ class Motor_model extends CI_Model
 		$this->db->join("merk", "merk.id = motor.merk_id");
 		$this->db->join("jenis", "jenis.id = motor.jenis_id");
         $this->db->where($where);  
+        $this->db->where("motor.status_terjual",0);  
         $this->db->where("motor.is_deleted",0);  
         if(!empty($search)){
             $this->db->group_start();

@@ -160,6 +160,12 @@ class Pesanan extends Admin_Controller
 				'created_by' => $this->data['users']->id
 			);
 			$insert_pesanan = $this->pesanan_model->insert($data_pesanan);
+
+			$data_motor = array(
+				'status_terjual' => 1
+			);
+
+			$update = $this->motor_model->update($data_motor, array("id" => $id_produk[$i]));
 		}
 
 		redirect('Pesanan/');

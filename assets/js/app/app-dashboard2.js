@@ -58,6 +58,33 @@ define([
                         console.error('AJAX error:', status, error);
                     }
                 });
+
+                $.ajax({
+                    type : "POST",
+                    url : App.baseUrl+"dashboard/grafikPendapatan",
+                    data: { cabang_id: cabang_id },
+                    success : function(data) {
+                        var data = JSON.parse(data);
+                        App.grafikPendapatan(data.grafik, data.tahun);
+                    },
+                    error : function(data) {
+                        // do something
+                    }
+                });
+
+                $.ajax({
+                    type : "POST",
+                    url : App.baseUrl+"dashboard/grafikPendapatanPerTahun",
+                    data: { cabang_id: cabang_id },
+                    success : function(data) {
+                        var data = JSON.parse(data);
+                        App.grafikPendapatanPerTahun(data.grafik);
+                    },
+                    error : function(data) {
+                        // do something
+                    }
+                });
+    
             });
                
         },

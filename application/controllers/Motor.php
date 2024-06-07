@@ -58,19 +58,19 @@ class Motor extends Admin_Controller
 				'created_by' => $this->data['users']->id
 			);
 
-			$location_path = "./uploads/motor/";
-			if(!is_dir($location_path))
-			{
-				mkdir($location_path);
-			}
+			// $location_path = "./uploads/motor/";
+			// if(!is_dir($location_path))
+			// {
+			// 	mkdir($location_path);
+			// }
 
-			$tmp = $_FILES["gambar"]['name'];
-			$ext = ".".pathinfo($tmp, PATHINFO_EXTENSION);
-			$uploaded      = uploadFile('gambar', $location_path, 'motor', $ext);
+			// $tmp = $_FILES["gambar"]['name'];
+			// $ext = ".".pathinfo($tmp, PATHINFO_EXTENSION);
+			// $uploaded      = uploadFile('gambar', $location_path, 'motor', $ext);
 			
-			if($uploaded['status']==TRUE){
-				$data['gambar'] = str_replace(' ', '_', $uploaded['message']);	
-			}
+			// if($uploaded['status']==TRUE){
+			// 	$data['gambar'] = str_replace(' ', '_', $uploaded['message']);	
+			// }
 
 			$insert = $this->motor_model->insert($data);
 

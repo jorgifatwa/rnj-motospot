@@ -168,7 +168,7 @@ class Pesanan extends Admin_Controller
 			$update = $this->motor_model->update($data_motor, array("id" => $id_produk[$i]));
 		}
 
-		redirect('Pesanan/');
+		redirect('History_transaksi/');
 	}
 
 	public function dataList() 

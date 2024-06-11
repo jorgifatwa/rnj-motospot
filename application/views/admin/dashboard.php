@@ -35,7 +35,7 @@
 			<div class="small-box bg-success">
 			  <div class="inner">
 				<h3 id="pendapatan_bersih"><?php echo $pendapatan_bersih; ?></h3>
-				<p>Pendapatan Bersih Hari Ini</p>
+				<p>Profit Bersih Bulan Ini</p>
 			  </div>
 			  <div class="icon">
 				<i class="fa fa-coins "></i>
@@ -49,7 +49,7 @@
 			<div class="small-box bg-primary">
 			  <div class="inner">
 				<h3 id="pendapatan_kotor"><?php echo $pendapatan_kotor; ?></h3>
-				<p>Pendapatan Kotor Hari Ini</p>
+				<p>Omset Bulan Ini</p>
 			  </div>
 			  <div class="icon">
 				<i class="fa fa-coins "></i>

@@ -21,7 +21,7 @@ class Pesanan_model extends CI_Model
     }
  
     public function getAllById($where = array()){
-        $this->db->select("pesanan.*, merk.nama as merk_nama, jenis.nama as jenis_nama")->from("pesanan"); 
+        $this->db->select("pesanan.*, merk.nama as merk_nama, jenis.nama as jenis_nama, motor.nopol as nopol")->from("pesanan"); 
         $this->db->join("motor", "pesanan.id_produk = motor.id");
         $this->db->join("merk", "motor.merk_id = merk.id");
         $this->db->join("jenis", "motor.jenis_id = jenis.id");
@@ -118,7 +118,8 @@ class Pesanan_model extends CI_Model
         $this->db->where($where);  
         $this->db->where("pesanan.is_deleted", 0);  
         $this->db->where("transaksi.status", 1);  
-        $this->db->where("DATE(transaksi.created_at)", date("Y-m-d"));  
+        $this->db->where("MONTH(transaksi.created_at)", date("m"));
+        $this->db->where("YEAR(transaksi.created_at)", date("Y"));
 
         // if(!empty($search)){
         //     $this->db->group_start();
@@ -136,14 +137,15 @@ class Pesanan_model extends CI_Model
     }
 
     function getPendapatanBersih($where = array()){
-        $this->db->select("SUM(pesanan.jumlah * motor.harga_modal) AS total");
+        $this->db->select("SUM(pesanan.jumlah * motor.modal_akhir) AS total");
         $this->db->from("pesanan");
         $this->db->join("motor", "pesanan.id_produk = motor.id");
         $this->db->join("transaksi", "pesanan.id_transaksi = transaksi.id");
         $this->db->where($where);  
         $this->db->where("pesanan.is_deleted", 0);  
         $this->db->where("transaksi.status", 1);  
-        $this->db->where("DATE(transaksi.created_at)", date("Y-m-d"));  
+        $this->db->where("MONTH(transaksi.created_at)", date("m"));
+        $this->db->where("YEAR(transaksi.created_at)", date("Y"));
 
         // if(!empty($search)){
         //     $this->db->group_start();

@@ -104,6 +104,7 @@
               <tr>
                 <th>No.</th>
                 <th>Motor</th>
+                <th>Nopol</th>
                 <th>Harga Terjual</th>
                 <th>Amount</th>
               </tr>
@@ -115,6 +116,7 @@
               <tr>
                 <td><?= $no."." ?></td>
                 <td><?php echo $pesanan->merk_nama." - ".$pesanan->jenis_nama ?></td>
+                <td><?php echo $pesanan->nopol ?></td>
                 <td><?php echo "Rp. ".number_format($pesanan->harga_terjual) ?></td>
                 <td><?php echo "Rp. ".number_format($pesanan->harga_terjual) ?></td>
               </tr>

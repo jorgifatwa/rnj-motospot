@@ -15,6 +15,28 @@
   </div><!-- /.container-fluid -->
 </section>
 
+<style>
+    .image_container {
+        height: 120px;
+        width: 200px;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+    .image_container img {
+        height: 100%;
+        width: auto;
+        object-fit: cover;
+    }
+    .image_container span {
+        top: -8px;
+        right: 8px;
+        color:red;
+        font-size: 28px;
+        font-weight: normal;
+        cursor: pointer;
+    }
+</style>
+
 <section class="content">
     <div class="container-fluid">
         <div class="card">
@@ -23,6 +45,7 @@
                   <div class="form-group row">
                       <label class="form-label col-sm-3" for="">Pilih Cabang</label>
                       <div class="col-sm-4">
+                        <input type="hidden" id="editMode" value="true">
                           <select name="cabang_id" id="cabang_id" class="form-control">
                           <option value="">Pilih Cabang</option>
                               <?php foreach ($cabangs as $key => $cabang) { ?>
@@ -54,6 +77,24 @@
                       </div>
                   </div>
                   <div class="form-group row">
+                      <label class="form-label col-sm-3" for="">Warna</label>
+                      <div class="col-sm-4">
+                          <input class="form-control" type="text" id="warna" name="warna" autocomplete="off" placeholder="Warna" value="<?= $warna ?>">
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="form-label col-sm-3" for="">Nopol</label>
+                      <div class="col-sm-4">
+                          <input class="form-control" type="text" id="nopol" name="nopol" autocomplete="off" placeholder="Nopol" value="<?= $nopol ?>">
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="form-label col-sm-3" for="">Part Ori</label>
+                      <div class="col-sm-4">
+                          <input class="form-control" type="text" id="part_ori" name="part_ori" autocomplete="off" placeholder="Part Ori" value="<?= $part_ori ?>">
+                      </div>
+                  </div>
+                  <div class="form-group row">
                       <label class="form-label col-sm-3" for="">NIK</label>
                       <div class="col-sm-4">
                           <input class="form-control" type="hidden" id="id" name="id" autocomplete="off" placeholder="id" value="<?php echo $id ?>">
@@ -73,9 +114,21 @@
                       </div>
                   </div>
                   <div class="form-group row">
-                      <label class="form-label col-sm-3" for="">Harga Modal</label>
+                      <label class="form-label col-sm-3" for="">Modal Awal</label>
                       <div class="col-sm-4">
-                          <input class="form-control" type="text" id="harga_modal" name="harga_modal" autocomplete="off" placeholder="Harga Modal" value="<?php echo $harga_modal ?>">
+                          <input class="form-control" type="text" id="modal_awal" name="modal_awal" autocomplete="off" placeholder="Modal Awal" value="<?php echo $harga_modal ?>">
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="form-label col-sm-3" for="">Biaya Perbaikan</label>
+                      <div class="col-sm-4">
+                          <input class="form-control" type="text" id="biaya_perbaikan" name="biaya_perbaikan" autocomplete="off" placeholder="Biaya Perbaikan" value="<?php echo $biaya_perbaikan ?>">
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="form-label col-sm-3" for="">Modal Akhir</label>
+                      <div class="col-sm-4">
+                          <input class="form-control" type="text" id="modal_akhir" name="modal_akhir" autocomplete="off" placeholder="Modal Akhir" value="<?php echo $modal_akhir ?>">
                       </div>
                   </div>
                   <div class="form-group row">
@@ -88,6 +141,12 @@
                       <label class="form-label col-sm-3" for="">Harga Nett</label>
                       <div class="col-sm-4">
                           <input class="form-control" type="text" id="harga_net" name="harga_net" autocomplete="off" placeholder="Harga Nett" value="<?php echo $harga_net ?>">
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="form-label col-sm-3" for="">Link Instagram</label>
+                      <div class="col-sm-4">
+                          <input class="form-control" type="text" id="link_instagram" name="link_instagram" autocomplete="off" placeholder="Link Instagram" value="<?= $link_instagram ?>">
                       </div>
                   </div>
                   <div class="form-group row">
@@ -105,6 +164,46 @@
                           <textarea name="keterangan" id="keterangan" class="form-control" placeholder="Keterangan" cols="30" rows="10"><?php echo $keterangan ?></textarea>
                       </div>
                   </div>
+                  <div class="form-group row">
+                      <label class="form-label col-sm-3" for="">Gambar Motor</label>
+                      <div class="col-sm-4">
+                          <input type="file" name="gambar" id="gambar">
+                          <div class="gambar-motor mt-2">
+                            <?php if(!empty($galeris)){ ?>
+                                <?php foreach ($galeris as $key => $galeri) { ?>
+                                    <?php if($galeri->main == 1){ ?>
+                                        <div class="image_container d-flex justify-content-center position-relative">
+                                            <img src="<?= base_url('uploads/motor/'.$galeri->gambar) ?>" alt="image">
+                                        </div>
+                                    <?php } ?>
+                                <?php } ?>
+                            <?php } ?>
+                          </div>
+                      </div>
+                  </div>
+                  <hr>
+                    <div class="card shadow-sm w-100 mt-2">
+                        <div class="card-header d-flex justify-content-between">
+                            <h4>Detail Gambar</h4>
+                            <input type="file" name="image[]" id="image" multiple="" class="d-none">
+                            <button class="btn btn-sm btn-primary" onclick="document.getElementById('image').click()" type="button">Pilih Gambar</button>
+                        </div>
+                        <div class="card-body d-flex flex-wrap justify-content-start image-container">
+                            <?php if(!empty($galeris)){ $i = 0;?>
+                                <?php foreach ($galeris as $key => $galeri) { ?>
+                                    <?php if($galeri->main == 0){ ?>
+                                        <div class="image_container d-flex justify-content-center position-relative">
+                                            <img src="<?= base_url('uploads/motor/'.$galeri->gambar)?>" alt="image">
+                                            <span class="position-absolute delete-image-update" data-id="<?= $galeri->id ?>" data-index="<?= $i ?>" data-form="update">&times;</span>
+                                        </div>
+                                    <?php $i++;} ?>
+                                <?php } ?>
+                            <?php } ?>
+                        </div>
+                        <div class="deleted-images d-none">
+
+                        </div>
+                    </div>
                 </div>
                 <div class="card-footer">
                     <div class="row">

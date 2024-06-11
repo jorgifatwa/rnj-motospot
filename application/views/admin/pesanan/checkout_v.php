@@ -41,6 +41,12 @@
                               QRIS
                           </label>
                         </div>
+                        <div class="form-check mr-3">
+                          <input class="form-check-input" type="radio" name="metode_pembayaran" id="metode_pembayaran" value="booking">
+                          <label class="form-check-label" for="metode_pembayaran">
+                              Booking
+                          </label>
+                        </div>
                       </div>
                     </div>
                     <p class="error-radio"></p>
@@ -101,7 +107,7 @@
                           </div>
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group status-form row">
                       <label for="" class="form-label col-sm-3">Status</label>
                       <di class="col-sm-9">
                         <select name="status" class="form-control" id="status">

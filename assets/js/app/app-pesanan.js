@@ -321,6 +321,11 @@ define([
                 } else if (selectedValue === "qris") {
                     $('.tunai').addClass('d-none');
                     $('.non_tunai').removeClass('d-none');
+                }else if(selectedValue === "booking"){
+                    $('.tunai').addClass('d-none');
+                    $('.non_tunai').addClass('d-none');
+                    $("#status").val(2).trigger('change'); 
+                    $(".status-form").addClass('d-none');
                 }
             });
 

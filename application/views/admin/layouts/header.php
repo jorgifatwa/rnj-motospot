@@ -19,12 +19,15 @@
   <link rel="stylesheet" href="<?php echo base_url() ?>assets/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
   <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.css">
   <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/style.css">
-  <link rel="stylesheet" href="<?php echo base_url() ?>assets/plugins/bs-dropzone/dist/css/bs-dropzone.min.css">
   <link rel="stylesheet" href="<?php echo base_url() ?>assets/plugins/datatables/select.dataTables.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script type="text/javascript" src="<?php echo base_url() ?>assets/plugins/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="<?php echo base_url() ?>assets/plugins/datatables/dataTables.select.min.js"></script>
   <script type="text/javascript" src="<?php echo base_url() ?>assets/plugins/adminlte/adminlte.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.0/html2pdf.bundle.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/10.7.0/css/jquery.fileupload.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/10.7.0/js/vendor/jquery.ui.widget.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/10.7.0/js/jquery.iframe-transport.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/10.7.0/js/jquery.fileupload.min.js"></script>
 <!--   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> -->
 </head>

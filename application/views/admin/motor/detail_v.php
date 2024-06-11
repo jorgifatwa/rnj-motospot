@@ -127,11 +127,13 @@
                         </div>
                         <div class="col-6">
                             <div class="row gallery">
-                                <?php foreach($galeris as $galeri): ?>
-                                    <div class="col-md-4 mb-3">
-                                        <img src="<?= base_url('uploads/motor/' . $galeri->gambar) ?>" alt="Image" class="img-fluid">
-                                    </div>
-                                <?php endforeach; ?>
+                                <?php if(!empty($galeris)){ ?>
+                                    <?php foreach($galeris as $galeri): ?>
+                                        <div class="col-md-4 mb-3">
+                                            <img src="<?= base_url('uploads/motor/' . $galeri->gambar) ?>" alt="Image" class="img-fluid">
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>

@@ -42,6 +42,12 @@
         <div class="card">
             <form id="form" method="post" enctype="multipart/form-data">
                 <div class="card-body">
+                <div class="form-group row">
+                      <label class="form-label col-sm-3" for="">Nama Kendaraan</label>
+                      <div class="col-sm-4">
+                          <input class="form-control" type="text" id="nama_motor" name="nama_motor" autocomplete="off" placeholder="Nama Kendaraan" value="<?= $nama_motor ?>">
+                      </div>
+                  </div>
                   <div class="form-group row">
                       <label class="form-label col-sm-3" for="">Pilih Cabang</label>
                       <div class="col-sm-4">

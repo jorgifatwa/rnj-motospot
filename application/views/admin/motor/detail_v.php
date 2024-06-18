@@ -29,6 +29,12 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="form-label col-sm-3">Nama Kendaraan</label>
+                                <div class="col-sm-9">
+                                    <p><?= $nama_motor ?></p>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="form-label col-sm-3">Merk</label>
                                 <div class="col-sm-9">
                                     <p><?= $merk_name ?></p>
@@ -73,43 +79,43 @@
                             <div class="form-group row">
                                 <label class="form-label col-sm-3">KM</label>
                                 <div class="col-sm-9">
-                                    <p><?= $km ?></p>
+                                    <p><?= number_format($km) ?></p>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="form-label col-sm-3">Modal Awal</label>
                                 <div class="col-sm-9">
-                                    <p><?= $harga_modal ?></p>
+                                    <p><?= "Rp. ".number_format($harga_modal) ?></p>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="form-label col-sm-3">Biaya Perbaikan</label>
                                 <div class="col-sm-9">
-                                    <p><?= $biaya_perbaikan ?></p>
+                                    <p><?= "Rp. ".number_format($biaya_perbaikan) ?></p>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="form-label col-sm-3">Modal Akhir</label>
                                 <div class="col-sm-9">
-                                    <p><?= $modal_akhir ?></p>
+                                    <p><?= "Rp. ".number_format($modal_akhir) ?></p>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="form-label col-sm-3">Harga Open</label>
                                 <div class="col-sm-9">
-                                    <p><?= $harga_open ?></p>
+                                    <p><?= "Rp. ".number_format($harga_open) ?></p>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="form-label col-sm-3">Harga Nett</label>
                                 <div class="col-sm-9">
-                                    <p><?= $harga_net ?></p>
+                                    <p><?= "Rp. ".number_format($harga_net) ?></p>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="form-label col-sm-3">Link Instagram</label>
                                 <div class="col-sm-9">
-                                    <p><?= $link_instagram ?></p>
+                                    <a href="<?= $link_instagram ?>"><?= $link_instagram ?></a>
                                 </div>
                             </div>
                             <div class="form-group row">

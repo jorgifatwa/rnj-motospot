@@ -101,6 +101,7 @@
                     <thead>
                         <tr>
                             <th>Tanggal Publish</th>
+                            <th>Nama Kendaraan</th>
                             <th>Merk</th>
                             <th>Jenis</th>
                             <th>NIK</th>

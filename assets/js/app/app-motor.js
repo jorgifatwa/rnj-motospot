@@ -320,6 +320,7 @@ define([
                 },
                 "columns": [
                     { "data": "created_at" },
+                    { "data": "nama_motor" },
                     { "data": "merk_name" },
                     { "data": "jenis_name" },
                     { "data": "nik" },

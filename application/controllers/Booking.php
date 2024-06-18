@@ -8,6 +8,7 @@ class Booking extends Admin_Controller
 		parent::__construct();
 		$this->load->model('transaksi_model');
 		$this->load->model('pesanan_model');
+		$this->load->model('motor_model');
 	}
 
 	public function index() 
@@ -139,6 +140,13 @@ class Booking extends Admin_Controller
 				'status' => $status,
 			);
 			$update = $this->transaksi_model->update($data, array("id" => $id));
+			$pesanan = $this->pesanan_model->getOneBy(array("id_transaksi" => $id));
+
+			$data2 = array(
+				'status_terjual' => 0,
+			);
+
+			$update = $this->motor_model->update($data2, array("id" => $pesanan->id_produk));
 
 			$response_data['data'] = $data;
 			$response_data['msg'] = "transaksi Berhasil di Ubah";

@@ -46,10 +46,12 @@ class Motor extends Admin_Controller
 		$this->form_validation->set_rules('harga_open', "Harga Open Harus Diisi", 'trim|required');
 		$this->form_validation->set_rules('harga_net', "Harga Nett Harus Diisi", 'trim|required');
 		$this->form_validation->set_rules('link_instagram', "Link Instagram Harus Diisi", 'trim|required');
+		$this->form_validation->set_rules('nama_motor', "Nama Motor Harus Diisi", 'trim|required');
 
 		if ($this->form_validation->run() === TRUE) {
 			
 			$data = array(
+				'nama_motor' => $this->input->post('nama_motor'),
 				'merk_id' => $this->input->post('merk_id'),
 				'cabang_id' => $this->input->post('cabang_id'),
 				'jenis_id' => $this->input->post('jenis_id'),
@@ -145,10 +147,12 @@ class Motor extends Admin_Controller
 		$this->form_validation->set_rules('harga_open', "Harga Open Harus Diisi", 'trim|required');
 		$this->form_validation->set_rules('harga_net', "Harga Nett Harus Diisi", 'trim|required');
 		$this->form_validation->set_rules('link_instagram', "Link Instagram Harus Diisi", 'trim|required');
+		$this->form_validation->set_rules('nama_motor', "Nama Motor Harus Diisi", 'trim|required');
 
 		if ($this->form_validation->run() === TRUE) {
 			
 			$data = array(
+				'nama_motor' => $this->input->post('nama_motor'),
 				'merk_id' => $this->input->post('merk_id'),
 				'cabang_id' => $this->input->post('cabang_id'),
 				'jenis_id' => $this->input->post('jenis_id'),
@@ -278,6 +282,7 @@ class Motor extends Admin_Controller
 				$this->data['merks'] = $this->merk_model->getAllById();
 				
 				$this->data['id'] 	= (!empty($motor)) ? $motor[0]->id : "";
+				$this->data['nama_motor'] 	= (!empty($motor)) ? $motor[0]->nama_motor : "";
 				$this->data['merk_id'] 	= (!empty($motor)) ? $motor[0]->merk_id : "";
 				$this->data['jenis_id'] 	= (!empty($motor)) ? $motor[0]->jenis_id : "";
 				$this->data['cabang_id'] 	= (!empty($motor)) ? $motor[0]->cabang_id : "";
@@ -308,6 +313,7 @@ class Motor extends Admin_Controller
 	{
 		$columns = array(
 			0 => 'created_at',
+			1 => 'nama_motor',
 			1 => 'merk_name',
 			2 => 'jenis_name',
 			3 => 'nik',
@@ -382,6 +388,19 @@ class Motor extends Admin_Controller
 			$filtered = true;
 		}
 
+		if (!empty($this->input->post('search')['value'])) {
+			$search_value = $this->input->post('search')['value'];
+			$search = array(
+				"motor.nama_motor" => $search_value,
+				"merk.nama" => $search_value,
+				"jenis.nama" => $search_value,
+				"cabang.nama" => $search_value,
+				"motor.nik" => $search_value,
+			);
+
+			$filtered = true;
+		}
+
 		if ($filtered) {
 			$totalFiltered = $this->motor_model->getCountAllBy($limit, $start, $search, $order, $dir, $where);
 		} else {
@@ -412,6 +431,7 @@ class Motor extends Admin_Controller
 
 				$nestedData['id'] = $start + $key + 1;
 				$nestedData['created_at'] = $data->created_at;
+				$nestedData['nama_motor'] = $data->nama_motor;
 				$nestedData['pajak'] = $data->pajak;
 				$nestedData['merk_name'] = $data->merk_name;
 				$nestedData['cabang_name'] = $data->cabang_name;
@@ -479,6 +499,7 @@ class Motor extends Admin_Controller
 			$this->data['merks'] = $this->merk_model->getAllById();
 			
 			$this->data['id'] 	= (!empty($motor)) ? $motor[0]->id : "";
+			$this->data['nama_motor'] 	= (!empty($motor)) ? $motor[0]->nama_motor : "";
 			$this->data['merk_id'] 	= (!empty($motor)) ? $motor[0]->merk_id : "";
 			$this->data['merk_name'] 	= (!empty($motor)) ? $motor[0]->merk_name : "";
 			$this->data['jenis_id'] 	= (!empty($motor)) ? $motor[0]->jenis_id : "";

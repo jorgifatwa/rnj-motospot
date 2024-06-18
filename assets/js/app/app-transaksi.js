@@ -171,7 +171,7 @@ define([
                             toastr.error(data.msg);
                         } else {
                             toastr.success(data.msg);
-                            App.table_booking.ajax.reload(null, true);
+                            window.location = App.baseUrl + "/motor";
                         }
                     });
                 })

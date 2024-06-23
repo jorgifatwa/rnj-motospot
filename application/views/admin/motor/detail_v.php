@@ -82,6 +82,7 @@
                                     <p><?= number_format($km) ?></p>
                                 </div>
                             </div>
+                            <?php  if($this->data['users_groups']->id != 3){ ?>
                             <div class="form-group row">
                                 <label class="form-label col-sm-3">Modal Awal</label>
                                 <div class="col-sm-9">
@@ -100,6 +101,7 @@
                                     <p><?= "Rp. ".number_format($modal_akhir) ?></p>
                                 </div>
                             </div>
+                            <?php } ?>
                             <div class="form-group row">
                                 <label class="form-label col-sm-3">Harga Open</label>
                                 <div class="col-sm-9">

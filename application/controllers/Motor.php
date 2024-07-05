@@ -320,7 +320,7 @@ class Motor extends Admin_Controller
 			4 => 'km',
 			5 => 'pajak',
 			6 => 'cabang_name',
-			7 => 'harga_modal',
+			7 => 'nopol',
 			8 => 'harga_open',
 			9 => 'harga_net',
 			10 => '',
@@ -392,6 +392,7 @@ class Motor extends Admin_Controller
 			$search_value = $this->input->post('search')['value'];
 			$search = array(
 				"motor.nama_motor" => $search_value,
+				"motor.nopol" => $search_value,
 				"merk.nama" => $search_value,
 				"jenis.nama" => $search_value,
 				"cabang.nama" => $search_value,
@@ -439,7 +440,7 @@ class Motor extends Admin_Controller
 				$nestedData['status'] = $data->status == 0 ? 'Aktif' : 'Tidak Aktif';
 				$nestedData['nik'] = $data->nik;
 				$nestedData['km'] = number_format($data->km);
-				$nestedData['harga_modal'] = "Rp. " . number_format($data->harga_modal);
+				$nestedData['nopol'] = $data->nopol;
 				$nestedData['harga_open'] = "Rp. " . number_format($data->harga_open);
 				$nestedData['harga_net'] = "Rp. " . number_format($data->harga_net);
 				$nestedData['action'] = $edit_url . " " . $delete_url." ".$masukkan_keranjang." ".$detail_url;

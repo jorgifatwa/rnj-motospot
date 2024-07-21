@@ -437,7 +437,7 @@ class Motor extends Admin_Controller
 				$nestedData['merk_name'] = $data->merk_name;
 				$nestedData['cabang_name'] = $data->cabang_name;
 				$nestedData['jenis_name'] = $data->jenis_name;
-				$nestedData['status'] = $data->status == 0 ? 'Aktif' : 'Tidak Aktif';
+				$nestedData['status'] = $data->status == 0 ? 'Available' : 'On Maintenance';
 				$nestedData['nik'] = $data->nik;
 				$nestedData['km'] = number_format($data->km);
 				$nestedData['nopol'] = $data->nopol;

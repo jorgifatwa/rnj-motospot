@@ -123,7 +123,7 @@
                             <div class="form-group row">
                                 <label class="form-label col-sm-3">Status</label>
                                 <div class="col-sm-9">
-                                    <p><?= ($status == 0) ? 'Aktif' : 'Tidak Aktif' ?></p>
+                                    <p><?= ($status == 0) ? 'Available' : 'On Maintenance' ?></p>
                                 </div>
                             </div>
                             <div class="form-group row">

@@ -159,8 +159,8 @@
                       <label class="form-label col-sm-3" for="">Status</label>
                       <div class="col-sm-4">
                           <select name="status" id="status" class="form-control">
-                            <option value="0" <?php if($status == 0){ echo "selected"; } ?>>Aktif</option>
-                            <option value="1" <?php if($status == 1){ echo "selected"; } ?>>Tidak Aktif</option>
+                            <option value="0" <?php if($status == 0){ echo "selected"; } ?>>Available</option>
+                            <option value="1" <?php if($status == 1){ echo "selected"; } ?>>On Maintenance</option>
                           </select>
                       </div>
                   </div>

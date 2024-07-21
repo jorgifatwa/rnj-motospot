@@ -474,7 +474,7 @@ define([
                     { "data": "km" },
                     { "data": "pajak" },
                     { "data": "cabang_name" },
-                    { "data": "harga_modal" },
+                    { "data": "nopol" },
                     { "data": "harga_open" },
                     { "data": "harga_net" },
                     { "data": "action" ,"orderable": false}

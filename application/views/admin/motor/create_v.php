@@ -158,8 +158,8 @@
                       <label class="form-label col-sm-3" for="">Status</label>
                       <div class="col-sm-4">
                           <select name="status" id="status" class="form-control">
-                            <option value="0">Aktif</option>
-                            <option value="1">Tidak Aktif</option>
+                            <option value="0">Available</option>
+                            <option value="1">On Maintenance</option>
                           </select>
                       </div>
                   </div>

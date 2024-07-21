@@ -136,7 +136,7 @@
                     <th>KM</th>
                     <th>Pajak</th>
                     <th>Cabang</th>
-                    <th>Harga Modal</th>
+                    <th>Plat Nomor</th>
                     <th>Harga Open</th>
                     <th>Harga Nett</th>
                     <th>Aksi</th>

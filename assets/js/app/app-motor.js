@@ -146,6 +146,40 @@ define([
                     maximumFractionDigits: 0
                 }));
             })
+            
+            // Panggil fungsi untuk membersihkan dan memformat nilai awal
+            formatInputValue($('#harga_open'), $('#harga_open').val());
+            formatInputValue($('#harga_net'), $('#harga_net').val());
+            formatInputValue($('#modal_awal'), $('#modal_awal').val());
+            formatInputValue($('#modal_akhir'), $('#modal_akhir').val());
+            formatInputValue($('#biaya_perbaikan'), $('#biaya_perbaikan').val());
+            formatInputValue($('#km'), $('#km').val());
+
+            function formatInputValue(inputElement, value) {
+                // Membersihkan input dari karakter non-numerik, kecuali koma dan titik desimal
+                var cleanInput = value.replace(/[^\d.,]/g, '');
+                
+                // Hapus tanda desimal jika lebih dari satu
+                cleanInput = cleanInput.replace(/(\..*)\./g, '$1');
+                
+                // Ganti tanda titik dengan string kosong (untuk menghindari kesalahan dalam parsing)
+                cleanInput = cleanInput.replace(/\./g, '');
+                
+                // Ubah koma menjadi titik jika digunakan sebagai pemisah desimal
+                cleanInput = cleanInput.replace(/,/g, '.');
+                
+                // Parsing input jumlah uang menjadi angka desimal
+                var jumlahUang = parseFloat(cleanInput);
+                
+                // Setel nilai yang diformat kembali ke elemen input
+                if (!isNaN(jumlahUang)) {
+                    inputElement.val(jumlahUang.toLocaleString('id-ID', {
+                        maximumFractionDigits: 0
+                    }));
+                } else {
+                    inputElement.val('');
+                }
+            }
 
 
             $('#km').on('input', function () {

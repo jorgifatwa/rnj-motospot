@@ -170,8 +170,8 @@ class Motor extends Admin_Controller
 				'harga_net' => str_replace(".", "", $this->input->post('harga_net')),
 				'status' => $this->input->post('status'),
 				'keterangan' => $this->input->post('keterangan'),
-				'created_at' => date('Y-m-d H:i:s'),
-				'created_by' => $this->data['users']->id
+				'updated_at' => date('Y-m-d H:i:s'),
+				'updated_by' => $this->data['users']->id
 			);
 
 			$id = $this->input->post('id');
@@ -179,7 +179,8 @@ class Motor extends Admin_Controller
 			$update = $this->motor_model->update($data, array("motor.id" => $id));
 			
 			$deleted_images = $this->input->post('deleted_images');
-			if (isset($deleted_images)) {
+
+			if (!empty($deleted_images)) {
 				$deleted_images = json_decode($deleted_images);
 				for ($i=0; $i < count($deleted_images); $i++) { 
 					// Load the current images for the product
@@ -205,57 +206,72 @@ class Motor extends Admin_Controller
 				}
 			}else{
 				// Load the current images for the product
-				$current_images = $this->galeri_model->getAllById(array('produk_id' => $id));
-	
+				$current_images = $this->galeri_model->getAllById(array('produk_id' => $id, 'main' => 1));
+				
 				$location_path = "./uploads/motor/";
 				if(!is_dir($location_path))
 				{
 					mkdir($location_path);
 				}
-	
-				// Delete old images from server
-				if(!empty($current_images)){
-					foreach ($current_images as $image) {
-						$image_path = $location_path . $image->gambar;
-						if (file_exists($image_path)) {
-							unlink($image_path);
+				
+				if(!empty($_FILES['gambar']['name'])){
+					// Delete old images from server
+					if(!empty($current_images)){
+						foreach ($current_images as $image) {
+							$image_path = $location_path . $image->gambar;
+							if (file_exists($image_path)) {
+								unlink($image_path);
+							}
 						}
 					}
-				}
-	
-				$delete_current_images = $this->galeri_model->delete(array('produk_id' => $id));
-	
-				$tmp = $_FILES["gambar"]['name'];
-				$ext = ".".pathinfo($tmp, PATHINFO_EXTENSION);
-				$uploaded      = uploadFile('gambar', $location_path, 'gambar', $ext);
-				
-				if($uploaded['status']==TRUE){
-					$data['gambar'] = str_replace(' ', '_', $uploaded['message']);	
-					$data_gambar = array(
-						'produk_id' => $id,
-						'gambar' =>  $uploaded['message'],
-						'main' => 1,
-						'created_at' => date('Y-m-d H:i:s'),
-						'created_by' => $this->data['users']->id
-					);
-	
-					$insert_gambar = $this->galeri_model->insert($data_gambar);
-				}
-	
-				$uploaded = uploadFileArray('image', $location_path, 'motor', $ext);
-				
-				if($uploaded){
-					for ($i = 0; $i < count($_FILES["image"]['name']); $i++) { 
-						$data_galeri = array(
+		
+					$delete_current_images = $this->galeri_model->delete(array('produk_id' => $id, 'main' => 1));
+		
+					$tmp = $_FILES["gambar"]['name'];
+					$ext = ".".pathinfo($tmp, PATHINFO_EXTENSION);
+					$uploaded      = uploadFile('gambar', $location_path, 'gambar', $ext);
+					
+					if($uploaded['status']==TRUE){
+						$data['gambar'] = str_replace(' ', '_', $uploaded['message']);	
+						$data_gambar = array(
 							'produk_id' => $id,
-							'gambar' => $uploaded[$i]['file'],  // Use uploaded file name
-							'main' => 0,
+							'gambar' =>  $uploaded['message'],
+							'main' => 1,
 							'created_at' => date('Y-m-d H:i:s'),
 							'created_by' => $this->data['users']->id
 						);
-					
-						$insert_galeri = $this->galeri_model->insert($data_galeri);
-					}   
+		
+						$insert_gambar = $this->galeri_model->insert($data_gambar);
+					}
+		
+				}
+				if(!empty($_FILES["image"]['name'][0])){
+					$uploaded = uploadFileArray('image', $location_path, 'motor', $ext);
+					if($uploaded){
+						$current_images = $this->galeri_model->getAllById(array('produk_id' => $id, 'main' => 0));
+						if(!empty($current_images)){
+							foreach ($current_images as $image) {
+								$image_path = $location_path . $image->gambar;
+								if (file_exists($image_path)) {
+									unlink($image_path);
+								}
+							}
+						}
+
+						$delete_current_images = $this->galeri_model->delete(array('produk_id' => $id, 'main' => 0));
+			
+						for ($i = 0; $i < count($_FILES["image"]['name']); $i++) { 
+							$data_galeri = array(
+								'produk_id' => $id,
+								'gambar' => $uploaded[$i]['file'],  // Use uploaded file name
+								'main' => 0,
+								'created_at' => date('Y-m-d H:i:s'),
+								'created_by' => $this->data['users']->id
+							);
+						
+							$insert_galeri = $this->galeri_model->insert($data_galeri);
+						}   
+					} 
 				}
 			}
 

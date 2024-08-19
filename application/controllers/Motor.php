@@ -216,7 +216,6 @@ class Motor extends Admin_Controller
 
 				if(!empty($_FILES['gambar']['name'])){
 					print_r('masuk 1');
-					die();
 					// Delete old images from server
 					if(!empty($current_images)){
 					print_r('masuk 2');

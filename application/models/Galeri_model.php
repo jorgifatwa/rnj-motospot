@@ -31,29 +31,17 @@ class Galeri_model extends CI_Model
         } 
         return FALSE;
     }
-    public function insert($data){
-        // Log data before insert for debugging
-        log_message('debug', 'Data to be inserted: ' . json_encode($data));
+    public function insert($data) {
+        $columns = implode(", ", array_keys($data));
+        $values  = implode(", ", array_map([$this->db, 'escape'], array_values($data)));
         
-        // Validasi produk_id sebelum insert
-        if(!isset($data['produk_id']) || empty($data['produk_id'])){
-            log_message('error', 'Produk ID is missing or empty.');
-            return false;
-        }
+        $sql = "INSERT INTO galeri ($columns) VALUES ($values)";
         
-        // Insert data into the motor table
-        $this->db->insert("galeri", $data);
+        $this->db->query($sql);
         
-        // Check if the insert was successful
-        if($this->db->affected_rows() > 0){
-            $insert_id = $this->db->insert_id();
-            log_message('debug', 'Insert successful. Insert ID: ' . $insert_id);
-            return $insert_id;
-        } else {
-            log_message('error', 'Insert failed.');
-            return false;
-        }
-    }    
+        return $this->db->insert_id();
+    }
+    
 
     public function update($data,$where){
         $this->db->update("galeri", $data, $where);

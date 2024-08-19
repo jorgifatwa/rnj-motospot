@@ -207,20 +207,21 @@ class Motor extends Admin_Controller
 			}else{
 				// Load the current images for the product
 				$current_images = $this->galeri_model->getAllById(array('produk_id' => $id, 'main' => 1));
-				echo "<pre>";
-				var_dump($current_images);
-				print_r($_FILES['gambar']['name']);
-				die();
 				
 				$location_path = "./uploads/motor/";
 				if(!is_dir($location_path))
 				{
 					mkdir($location_path);
 				}
-				
+
 				if(!empty($_FILES['gambar']['name'])){
+					print_r('masuk 1');
+					die();
 					// Delete old images from server
 					if(!empty($current_images)){
+					print_r('masuk 2');
+					die();
+
 						foreach ($current_images as $image) {
 							$image_path = $location_path . $image->gambar;
 							if (file_exists($image_path)) {
@@ -228,6 +229,7 @@ class Motor extends Admin_Controller
 							}
 						}
 					}
+					die();
 		
 					$delete_current_images = $this->galeri_model->delete(array('produk_id' => $id, 'main' => 1));
 		

@@ -31,17 +31,10 @@ class Galeri_model extends CI_Model
         } 
         return FALSE;
     }
-    public function insert($data) {
-        $columns = implode(", ", array_keys($data));
-        $values  = implode(", ", array_map([$this->db, 'escape'], array_values($data)));
-        
-        $sql = "INSERT INTO galeri ($columns) VALUES ($values)";
-        
-        $this->db->query($sql);
-        
+    public function insert($data){
+        $this->db->insert("galeri", $data);
         return $this->db->insert_id();
     }
-    
 
     public function update($data,$where){
         $this->db->update("galeri", $data, $where);

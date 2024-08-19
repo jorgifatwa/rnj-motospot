@@ -243,15 +243,7 @@ class Motor extends Admin_Controller
 						);
 		
 						$insert_gambar = $this->galeri_model->insert($data_gambar);
-
-						echo "<pre>";
-						print_r($id);
-						print_r($insert_gambar);
-						die();
 					}
-					print_r('mm');
-					die();
-		
 				}
 				if(!empty($_FILES["image"]['name'][0])){
 					$uploaded = uploadFileArray('image', $location_path, 'motor', $ext);

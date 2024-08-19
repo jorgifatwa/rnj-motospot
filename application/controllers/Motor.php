@@ -208,7 +208,7 @@ class Motor extends Admin_Controller
 				// Load the current images for the product
 				$current_images = $this->galeri_model->getAllById(array('produk_id' => $id, 'main' => 1));
 				echo "<pre>";
-				print_r($current_images);
+				var_dump($current_images);
 				print_r($_FILES['gambar']['name']);
 				die();
 				

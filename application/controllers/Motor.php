@@ -176,6 +176,9 @@ class Motor extends Admin_Controller
 
 			$id = $this->input->post('id');
 
+			print_r($id);
+			die();
+
 			$update = $this->motor_model->update($data, array("motor.id" => $id));
 			
 			$deleted_images = $this->input->post('deleted_images');

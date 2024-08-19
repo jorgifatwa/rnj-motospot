@@ -246,6 +246,8 @@ class Motor extends Admin_Controller
 					}
 				}
 				if(!empty($_FILES["image"]['name'][0])){
+					$tmp = $_FILES["image"]['name'][0];
+					$ext = ".".pathinfo($tmp, PATHINFO_EXTENSION);
 					$uploaded = uploadFileArray('image', $location_path, 'motor', $ext);
 					if($uploaded){
 						$current_images = $this->galeri_model->getAllById(array('produk_id' => $id, 'main' => 0));

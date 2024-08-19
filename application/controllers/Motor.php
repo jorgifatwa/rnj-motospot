@@ -181,8 +181,6 @@ class Motor extends Admin_Controller
 			$deleted_images = $this->input->post('deleted_images');
 
 			if (!empty($deleted_images)) {
-				print_r('masuk 1');
-				die();
 				$deleted_images = json_decode($deleted_images);
 				for ($i=0; $i < count($deleted_images); $i++) { 
 					// Load the current images for the product
@@ -207,10 +205,12 @@ class Motor extends Admin_Controller
 					$delete_current_images = $this->galeri_model->delete(array('id' => $deleted_images[$i]));
 				}
 			}else{
-				print_r('masuk 2');
-				die();
 				// Load the current images for the product
 				$current_images = $this->galeri_model->getAllById(array('produk_id' => $id, 'main' => 1));
+				echo "<pre>";
+				print_r($current_images);
+				print_r($_FILES['gambar']['name']);
+				die();
 				
 				$location_path = "./uploads/motor/";
 				if(!is_dir($location_path))

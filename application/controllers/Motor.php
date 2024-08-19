@@ -245,7 +245,7 @@ class Motor extends Admin_Controller
 						$insert_gambar = $this->galeri_model->insert($data_gambar);
 
 						echo "<pre>";
-						print_r($uploaded);
+						print_r($id);
 						print_r($insert_gambar);
 						die();
 					}

@@ -235,7 +235,7 @@ class Motor extends Admin_Controller
 					if($uploaded['status']==TRUE){
 						$data['gambar'] = str_replace(' ', '_', $uploaded['message']);	
 						$data_gambar = array(
-							'produk_id' => $id,
+							'produk_id' => $this->input->post('id'),
 							'gambar' =>  $uploaded['message'],
 							'main' => 1,
 							'created_at' => date('Y-m-d H:i:s'),

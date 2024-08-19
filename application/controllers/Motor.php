@@ -215,11 +215,8 @@ class Motor extends Admin_Controller
 				}
 
 				if(!empty($_FILES['gambar']['name'])){
-					print_r('masuk 1');
 					// Delete old images from server
 					if(!empty($current_images)){
-					print_r('masuk 2');
-					die();
 
 						foreach ($current_images as $image) {
 							$image_path = $location_path . $image->gambar;
@@ -228,9 +225,10 @@ class Motor extends Admin_Controller
 							}
 						}
 					}
-					die();
-		
+					
 					$delete_current_images = $this->galeri_model->delete(array('produk_id' => $id, 'main' => 1));
+					var_dump($delete_current_images);
+					die();
 		
 					$tmp = $_FILES["gambar"]['name'];
 					$ext = ".".pathinfo($tmp, PATHINFO_EXTENSION);

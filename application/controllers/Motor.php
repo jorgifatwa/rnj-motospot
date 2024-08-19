@@ -227,8 +227,6 @@ class Motor extends Admin_Controller
 					}
 					
 					$delete_current_images = $this->galeri_model->delete(array('produk_id' => $id, 'main' => 1));
-					var_dump($delete_current_images);
-					die();
 		
 					$tmp = $_FILES["gambar"]['name'];
 					$ext = ".".pathinfo($tmp, PATHINFO_EXTENSION);
@@ -245,7 +243,14 @@ class Motor extends Admin_Controller
 						);
 		
 						$insert_gambar = $this->galeri_model->insert($data_gambar);
+
+						echo "<pre>";
+						print_r($uploaded);
+						print_r($insert_gambar);
+						die();
 					}
+					print_r('mm');
+					die();
 		
 				}
 				if(!empty($_FILES["image"]['name'][0])){
